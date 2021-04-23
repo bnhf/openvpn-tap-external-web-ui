@@ -1,4 +1,4 @@
-module github.com/adamwalach/openvpn-web-ui
+module github.com/tyzbit/openvpn-web-ui
 
 go 1.16
 

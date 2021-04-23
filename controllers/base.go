@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/adamwalach/openvpn-web-ui/models"
 	"github.com/astaxie/beego"
+	"github.com/tyzbit/openvpn-web-ui/models"
 )
 
 type BaseController struct {

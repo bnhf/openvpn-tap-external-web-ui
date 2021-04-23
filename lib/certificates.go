@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/adamwalach/openvpn-web-ui/models"
 	"github.com/astaxie/beego"
+	"github.com/tyzbit/openvpn-web-ui/models"
 )
 
 //Cert

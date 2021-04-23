@@ -44,7 +44,7 @@ Requirements:
 
 Execute commands
 
-    curl -O https://raw.githubusercontent.com/adamwalach/openvpn-web-ui/master/docs/docker-compose.yml
+    curl -O https://raw.githubusercontent.com/tyzbit/openvpn-web-ui/master/docs/docker-compose.yml
     docker-compose up -d
 
 It starts two docker containers. One with OpenVPN server and second with OpenVPNAdmin web application. Through a docker volume it creates following directory structure:
@@ -84,8 +84,8 @@ Requirements:
 
 Execute commands:
 
-    go get github.com/adamwalach/openvpn-web-ui
-    cd $GOPATH/src/github.com/adamwalach/openvpn-web-ui
+    go get github.com/tyzbit/openvpn-web-ui
+    cd $GOPATH/src/github.com/tyzbit/openvpn-web-ui
     bee run -gendoc=true
 
 ## Todo

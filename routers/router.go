@@ -8,8 +8,8 @@
 package routers
 
 import (
-	"github.com/adamwalach/openvpn-web-ui/controllers"
 	"github.com/astaxie/beego"
+	"github.com/tyzbit/openvpn-web-ui/controllers"
 )
 
 func init() {

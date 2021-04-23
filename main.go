@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/adamwalach/openvpn-web-ui/lib"
-	_ "github.com/adamwalach/openvpn-web-ui/routers"
 	"github.com/astaxie/beego"
+	"github.com/tyzbit/openvpn-web-ui/lib"
+	_ "github.com/tyzbit/openvpn-web-ui/routers"
 )
 
 func main() {

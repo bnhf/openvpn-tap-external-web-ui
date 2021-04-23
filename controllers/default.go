@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"github.com/adamwalach/openvpn-web-ui/lib"
-	"github.com/adamwalach/openvpn-web-ui/models"
 	"github.com/astaxie/beego"
+	"github.com/tyzbit/openvpn-web-ui/lib"
+	"github.com/tyzbit/openvpn-web-ui/models"
 
 	mi "github.com/tyzbit/go-openvpn/server/mi"
 )

@@ -6,6 +6,6 @@ PKGFILE=openvpn-web-ui.tar.gz
 
 cp -f ../$PKGFILE ./
 
-docker build -t awalach/openvpn-web-ui .
+docker build -t tyzbit/openvpn-web-ui .
 
 rm -f $PKGFILE
