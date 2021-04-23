@@ -3,9 +3,9 @@ package models
 import (
 	"os"
 
-	"github.com/adamwalach/go-openvpn/server/config"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"github.com/tyzbit/go-openvpn/server/config"
 	passlib "gopkg.in/hlandau/passlib.v1"
 )
 
@@ -98,6 +98,8 @@ func createDefaultOVConfig() {
 		Config: config.Config{
 			Port:                1194,
 			Proto:               "udp",
+			DNSServerOne:        "8.8.8.8",
+			DNSServerTwo:        "8.8.4.4",
 			Cipher:              "AES-256-CBC",
 			Keysize:             256,
 			Auth:                "SHA256",
