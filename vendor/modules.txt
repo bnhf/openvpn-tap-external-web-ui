@@ -1,0 +1,59 @@
+# github.com/Sirupsen/logrus v0.10.0
+## explicit
+github.com/Sirupsen/logrus
+# github.com/adamwalach/go-openvpn v0.0.0-20170320215004-37de024281f7
+## explicit
+github.com/adamwalach/go-openvpn/client/config
+github.com/adamwalach/go-openvpn/server/config
+github.com/adamwalach/go-openvpn/server/mi
+# github.com/astaxie/beego v1.7.2
+## explicit
+github.com/astaxie/beego
+github.com/astaxie/beego/config
+github.com/astaxie/beego/context
+github.com/astaxie/beego/grace
+github.com/astaxie/beego/logs
+github.com/astaxie/beego/orm
+github.com/astaxie/beego/session
+github.com/astaxie/beego/toolbox
+github.com/astaxie/beego/utils
+github.com/astaxie/beego/validation
+# github.com/beego/beego/v2 v2.0.1
+## explicit
+# github.com/cloudfoundry/gosigar v0.0.0-20160602191207-c32d31af94b0
+## explicit
+github.com/cloudfoundry/gosigar
+# github.com/mattn/go-sqlite3 v2.0.3+incompatible
+## explicit
+github.com/mattn/go-sqlite3
+# github.com/tyzbit/go-openvpn v0.0.0-20210423225237-1b34ef783cf6
+## explicit
+github.com/tyzbit/go-openvpn/server/config
+# golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+## explicit
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
+golang.org/x/crypto/pbkdf2
+golang.org/x/crypto/scrypt
+# golang.org/x/net v0.0.0-20201021035429-f5854403a974
+## explicit
+# golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f
+## explicit
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+# gopkg.in/hlandau/easymetric.v1 v1.0.0
+## explicit
+gopkg.in/hlandau/easymetric.v1/cexp
+# gopkg.in/hlandau/measurable.v1 v1.0.1
+## explicit
+gopkg.in/hlandau/measurable.v1
+# gopkg.in/hlandau/passlib.v1 v1.0.9
+## explicit
+gopkg.in/hlandau/passlib.v1
+gopkg.in/hlandau/passlib.v1/abstract
+gopkg.in/hlandau/passlib.v1/hash/bcrypt
+gopkg.in/hlandau/passlib.v1/hash/bcryptsha256
+gopkg.in/hlandau/passlib.v1/hash/scrypt
+gopkg.in/hlandau/passlib.v1/hash/scrypt/raw
+gopkg.in/hlandau/passlib.v1/hash/sha2crypt
+gopkg.in/hlandau/passlib.v1/hash/sha2crypt/raw
