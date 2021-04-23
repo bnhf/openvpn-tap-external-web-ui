@@ -5,7 +5,7 @@ import (
 	"github.com/adamwalach/openvpn-web-ui/models"
 	"github.com/astaxie/beego"
 
-	mi "github.com/adamwalach/go-openvpn/server/mi"
+	mi "github.com/tyzbit/go-openvpn/server/mi"
 )
 
 type MainController struct {
