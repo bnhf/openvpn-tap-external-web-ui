@@ -112,6 +112,8 @@ func createDefaultOVConfig() {
 			Ca:                  "keys/ca.crt",
 			Cert:                "keys/server.crt",
 			Key:                 "keys/server.key",
+			ExtraServerOptions:  "",
+			ExtraClientOptions:  "",
 		},
 	}
 	o := orm.NewOrm()
