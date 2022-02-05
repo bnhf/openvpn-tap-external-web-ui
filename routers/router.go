@@ -9,7 +9,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/tyzbit/openvpn-web-ui/controllers"
+	"github.com/bnhf/openvpn-tap-external-web-ui/controllers"
 )
 
 func init() {

@@ -10,9 +10,9 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/validation"
-	"github.com/tyzbit/go-openvpn/client/config"
-	"github.com/tyzbit/openvpn-web-ui/lib"
-	"github.com/tyzbit/openvpn-web-ui/models"
+	"github.com/bnhf/go-openvpn/client/config"
+	"github.com/bnhf/openvpn-tap-external-web-ui/lib"
+	"github.com/bnhf/openvpn-tap-external-web-ui/models"
 )
 
 type NewCertParams struct {

@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/tyzbit/openvpn-web-ui/lib"
-	"github.com/tyzbit/openvpn-web-ui/models"
+	"github.com/bnhf/openvpn-tap-external-web-ui/lib"
+	"github.com/bnhf/openvpn-tap-external-web-ui/models"
 
-	mi "github.com/tyzbit/go-openvpn/server/mi"
+	mi "github.com/bnhf/go-openvpn/server/mi"
 )
 
 type MainController struct {

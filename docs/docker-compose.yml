@@ -3,7 +3,7 @@ services:
   openvpn:
     cap_add:
      - NET_ADMIN
-    image: tyzbit/openvpn
+    image: bnhf/openvpn
     container_name: openvpn
     ports:
      - "1194:1194/udp"
@@ -13,7 +13,7 @@ services:
     volumes:
      - ./openvpn-data/conf:/etc/openvpn
   gui:
-    image: tyzbit/openvpn-web-ui
+    image: bnhf/openvpn-tap-external-web-ui
     container_name: openvpn-gui
     environment:
     - OPENVPN_ADMIN_USERNAME=admin

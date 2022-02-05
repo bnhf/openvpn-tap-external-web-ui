@@ -5,7 +5,7 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/tyzbit/go-openvpn/server/config"
+	"github.com/bnhf/go-openvpn/server/config"
 	passlib "gopkg.in/hlandau/passlib.v1"
 )
 
