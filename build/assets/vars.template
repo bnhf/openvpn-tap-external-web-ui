@@ -61,12 +61,12 @@ export KEY_EXPIRE=3650
 # These are the default values for fields
 # which will be placed in the certificate.
 # Don't leave any of these fields blank.
-export KEY_COUNTRY="US"
-export KEY_PROVINCE="NY"
-export KEY_CITY="New York"
-export KEY_ORG="dummy"
-export KEY_EMAIL="demo@example.com"
-export KEY_OU="IT"
+export KEY_COUNTRY=${COUNTRY}
+export KEY_PROVINCE=${PROVINCE}
+export KEY_CITY=${CITY}
+export KEY_ORG=${ORG}
+export KEY_EMAIL=${EMAIL}
+export KEY_OU=${OU}
 
 # X509 Subject Field
 export KEY_NAME="iXa-CA"
