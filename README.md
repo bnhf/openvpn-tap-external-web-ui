@@ -1,19 +1,21 @@
-# OpenVPN-web-ui
+# OpenVPN-TAP-external-web-ui
 
 ## Summary
-OpenVPN server web administration interface.
+OpenVPN TAP (bridge) external (non-Docker) server web administration interface.
 
 Goal: create quick to deploy and easy to use solution that makes work with small OpenVPN environments a breeze.
 
-If you have docker and docker-compose installed, you can jump directly to [installation](#Prod).
+If you have docker and Portainer installed, you can jump directly to [installation](#Prod).
 
-![Status page](docs/images/preview_status.png?raw=true)
+![Status page](docs/images/screenshot-brix-pc2_8080-2022.02.03-16_09_24.png?raw=true)
 
 Please note this project is in alpha stage. It still needs some work to make it secure and feature complete.
+If you have a functioning OpenVPN TAP Server on the same host as your Docker containers, you should be able
+to use this fork to monitor OpenVPN connections. Certificate generation and management is not finished.
 
 ## Motivation
 
-
+* to create a version of this project that will work with OpenVPN TAP servers
 
 ## Features
 
@@ -22,6 +24,7 @@ Please note this project is in alpha stage. It still needs some work to make it 
 * ability to download client certificates as a zip package with client configuration inside
 * log preview
 * modification of OpenVPN configuration file through web interface
+* this fork is designed to use an external version of OpenVPN configured for TAP (bridge) -- which is not possible with Docker
 
 ## Screenshots
 
@@ -39,13 +42,13 @@ Please change password to your own immediately!
 ### Prod
 
 Requirements:
-* docker and docker-compose
+* docker and Portainer
 * on firewall open ports: 1194/udp and 8080/tcp
 
-Execute commands
+Setup your Portainer Stacks page as shown, inserting environment variables for creating certificates:
 
-    curl -O https://raw.githubusercontent.com/tyzbit/openvpn-web-ui/master/docs/docker-compose.yml
-    docker-compose up -d
+![Status page](docs/images/screenshot-brix-pc2_9443-2022.02.03-15_35_24.png?raw=true)
+
 
 It starts two docker containers. One with OpenVPN server and second with OpenVPNAdmin web application. Through a docker volume it creates following directory structure:
 

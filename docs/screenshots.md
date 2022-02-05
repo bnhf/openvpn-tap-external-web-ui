@@ -15,3 +15,7 @@
 ## OpenVPN config
 
 ![Status page](images/preview_openvpn_config.png?raw=true)
+
+## Portainer Stacks example
+
+![Status page](images/screenshot-brix-pc2_9443-2022.02.03-15_35_24.png?raw=true)
