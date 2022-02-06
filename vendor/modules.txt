@@ -15,17 +15,19 @@ github.com/astaxie/beego/utils
 github.com/astaxie/beego/validation
 # github.com/beego/beego/v2 v2.0.1
 ## explicit
+# github.com/bnhf/go-openvpn v0.0.0-20220205182224-876f7742b4cc
+## explicit
+github.com/bnhf/go-openvpn/client/config
+github.com/bnhf/go-openvpn/server/config
+github.com/bnhf/go-openvpn/server/mi
 # github.com/cloudfoundry/gosigar v0.0.0-20160602191207-c32d31af94b0
 ## explicit
 github.com/cloudfoundry/gosigar
 # github.com/mattn/go-sqlite3 v2.0.3+incompatible
 ## explicit
 github.com/mattn/go-sqlite3
-# github.com/bnhf/go-openvpn v0.0.0-20210424013607-9f42e3a247a6
+# github.com/tyzbit/go-openvpn v0.0.0-20210424013607-9f42e3a247a6
 ## explicit
-github.com/bnhf/go-openvpn/client/config
-github.com/bnhf/go-openvpn/server/config
-github.com/bnhf/go-openvpn/server/mi
 # golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 ## explicit
 golang.org/x/crypto/bcrypt

@@ -7,30 +7,41 @@ import (
 )
 
 var defaultConfig = Config{
-	ServerAddress:      "127.0.0.1",
-	Port:               1194,
-	Proto:              "udp",
-	Cipher:             "AES-256-CBC",
-	Keysize:            256,
-	Auth:               "SHA256",
-	Ca:                 "ca.crt",
-	ExtraClientOptions: "",
+	Port:                1194,
+	Proto:               "udp",
+	DNSServerOne:        "8.8.8.8",
+	DNSServerTwo:        "8.8.4.4",
+	Cipher:              "AES-256-CBC",
+	Keysize:             256,
+	Auth:                "SHA256",
+	Dh:                  "dh2048.pem",
+	Keepalive:           "10 120",
+	IfconfigPoolPersist: "ipp.txt",
+	ExtraConfigOptions:  "",
 }
 
 //Config model
 type Config struct {
-	ServerAddress string
-	Port          int
-	Proto         string
+	Port  int
+	Proto string
 
 	Ca   string
 	Cert string
 	Key  string
 
-	Cipher             string
-	Keysize            int
-	Auth               string
-	ExtraClientOptions string
+	Cipher  string
+	Keysize int
+	Auth    string
+	Dh      string
+
+	Server              string
+	IfconfigPoolPersist string
+	Keepalive           string
+	MaxClients          int
+
+	ExtraConfigOptions string
+
+	Management string
 }
 
 //New returns config object with default values
