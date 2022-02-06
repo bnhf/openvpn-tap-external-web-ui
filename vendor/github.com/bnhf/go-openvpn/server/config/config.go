@@ -34,6 +34,8 @@ type Config struct {
 	Auth    string
 	Dh      string
 
+	DNSServerOne        string
+	DNSServerTwo        string
 	Server              string
 	IfconfigPoolPersist string
 	Keepalive           string
