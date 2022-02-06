@@ -6,7 +6,7 @@ require (
 	github.com/Sirupsen/logrus v0.10.0 // indirect
 	github.com/astaxie/beego v1.7.2
 	github.com/beego/beego/v2 v2.0.1 // indirect
-	github.com/bnhf/go-openvpn v0.0.0-20220206211839-19f507e397ab
+	github.com/bnhf/go-openvpn v0.0.0-20220206222505-9c1a47e6e8d5
 	github.com/cloudfoundry/gosigar v0.0.0-20160602191207-c32d31af94b0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect

@@ -14,7 +14,7 @@ var defaultConfig = Config{
 	Keysize:            256,
 	Auth:               "SHA256",
 	Ca:                 "ca.crt",
-	ExtraConfigOptions: "",
+	ExtraClientOptions: "",
 }
 
 //Config model
@@ -30,7 +30,7 @@ type Config struct {
 	Cipher             string
 	Keysize            int
 	Auth               string
-	ExtraConfigOptions string
+	ExtraClientOptions string
 }
 
 //New returns config object with default values

@@ -27,6 +27,10 @@ github.com/bnhf/go-openvpn v0.0.0-20220206195409-8d46dce96fef h1:QRcD+ul2x2nIrr+
 github.com/bnhf/go-openvpn v0.0.0-20220206195409-8d46dce96fef/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
 github.com/bnhf/go-openvpn v0.0.0-20220206211839-19f507e397ab h1:/lTuBITqyhQqxn6ppBcNpzaWMNpUXZJ9RE5bniExGpI=
 github.com/bnhf/go-openvpn v0.0.0-20220206211839-19f507e397ab/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
+github.com/bnhf/go-openvpn v0.0.0-20220206215347-f5c0b039abf0 h1:AT1kLLvvPQCH2/7DcxdC1/b4pV6q7zf/nK2ZIh3BZ+I=
+github.com/bnhf/go-openvpn v0.0.0-20220206215347-f5c0b039abf0/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
+github.com/bnhf/go-openvpn v0.0.0-20220206222505-9c1a47e6e8d5 h1:wM48MgTZHerRK3QQKp3oLQothWImStWybQhh7+bFnlQ=
+github.com/bnhf/go-openvpn v0.0.0-20220206222505-9c1a47e6e8d5/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
 github.com/bradfitz/gomemcache v0.0.0-20180710155616-bc664df96737/go.mod h1:PmM6Mmwb0LSuEubjR8N7PtNe1KxZLtOUHtbeikc5h60=
 github.com/casbin/casbin v1.7.0/go.mod h1:c67qKN6Oum3UF5Q1+BByfFxkwKvhwW57ITjqwtzR1KE=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
