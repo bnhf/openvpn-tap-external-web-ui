@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
-	"github.com/tyzbit/go-openvpn/server/config"
+	"github.com/bnhf/go-openvpn/server/config"
 )
 
 //OVConfig holds values for OpenVPN config file

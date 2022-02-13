@@ -87,8 +87,8 @@ Requirements:
 
 Execute commands:
 
-    go get github.com/tyzbit/openvpn-web-ui
-    cd $GOPATH/src/github.com/tyzbit/openvpn-web-ui
+    go get github.com/bnhf/openvpn-tap-external-web-ui
+    cd $GOPATH/src/github.com/bnhf/openvpn-tap-external-web-ui
     bee run -gendoc=true
 
 ## Todo

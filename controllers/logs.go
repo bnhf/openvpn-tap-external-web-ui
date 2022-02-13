@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/astaxie/beego"
-	"github.com/tyzbit/openvpn-web-ui/models"
+	"github.com/bnhf/openvpn-tap-external-web-ui/models"
 )
 
 type LogsController struct {
