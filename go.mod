@@ -3,7 +3,7 @@ module github.com/bnhf/openvpn-tap-external-web-ui
 go 1.17
 
 require (
-	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/sirupsen/logrus v1.2.0 // indirect
 	github.com/astaxie/beego v1.7.2
 	github.com/beego/beego/v2 v2.0.1 // indirect
 	github.com/bnhf/go-openvpn v0.0.0-20220206222505-9c1a47e6e8d5
