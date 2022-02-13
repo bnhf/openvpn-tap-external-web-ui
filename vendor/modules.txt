@@ -1,6 +1,6 @@
-# github.com/Sirupsen/logrus v0.10.0
+# github.com/sirupsen/logrus v1.2.0
 ## explicit
-github.com/Sirupsen/logrus
+github.com/sirupsen/logrus
 # github.com/astaxie/beego v1.7.2
 ## explicit
 github.com/astaxie/beego

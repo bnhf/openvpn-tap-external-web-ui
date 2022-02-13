@@ -6,7 +6,7 @@ import (
 	"net"
 	"strings"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 //SendCommand passes command to a given connection (adds logging and EOL character)
