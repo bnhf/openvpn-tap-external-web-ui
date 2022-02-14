@@ -1,25 +1,36 @@
 #!/bin/bash -e
 
-CA_NAME=LocalCA
-SERVER_NAME=server
-EASY_RSA=/usr/share/easy-rsa
+# PiVPN will have already setup the CA and server.crt/.key
+# CA_NAME=LocalCA
+# SERVER_NAME=server
+# EASY_RSA=/etc/openvpn/easy-rsa
 
-mkdir -p /etc/openvpn/keys
-touch /etc/openvpn/keys/index.txt
-echo 01 > /etc/openvpn/keys/serial
-cp -f /opt/scripts/vars.template /etc/openvpn/keys/vars
+VARS=/etc/openvpn/easy-rsa/vars
+# PiVPN stores its keys under easy-rsa/pki
+# mkdir -p /etc/openvpn/keys
+# touch /etc/openvpn/keys/index.txt
+# echo 01 > /etc/openvpn/keys/serial
+cp -f /opt/scripts/vars.template /etc/openvpn/easy-rsa/vars
 
-$EASY_RSA/clean-all
-source /etc/openvpn/keys/vars
-export KEY_NAME=$CA_NAME
-echo "Generating CA cert"
-#$EASY_RSA/build-ca
-export EASY_RSA="${EASY_RSA:-.}"
+# Append the env variables passed by Docker to the vars file
+echo "set_var EASYRSA_REQ_COUNTRY   \"$COUNTRY\""  >> $VARS
+echo "set_var EASYRSA_REQ_PROVINCE  \"$PROVINCE\"" >> $VARS
+echo "set_var EASYRSA_REQ_CITY      \"$CITY\""     >> $VARS
+echo "set_var EASYRSA_REQ_ORG       \"$ORG\""      >> $VARS
+echo "set_var EASYRSA_REQ_EMAIL     \"$EMAIL\""    >> $VARS
+echo "set_var EASYRSA_REQ_OU        \"$OU\""       >> $VARS
 
-$EASY_RSA/easyrsa --batch build-ca nopass $*
+# $EASY_RSA/clean-all
+# source /etc/openvpn/keys/vars
+# export KEY_NAME=$CA_NAME
+# echo "Generating CA cert"
+# $EASY_RSA/build-ca
+# export EASY_RSA="${EASY_RSA:-.}"
 
-export KEY_NAME=$SERVER_NAME
+# $EASY_RSA/easyrsa --batch build-ca nopass $*
 
-echo "Generating server cert"
-#$EASY_RSA/build-key-server $SERVER_NAME
-$EASY_RSA/easyrsa --batch build-server-full $SERVER_NAME nopass
+# export KEY_NAME=$SERVER_NAME
+
+# echo "Generating server cert"
+# $EASY_RSA/build-key-server $SERVER_NAME
+# $EASY_RSA/easyrsa --batch build-server-full $SERVER_NAME nopass
