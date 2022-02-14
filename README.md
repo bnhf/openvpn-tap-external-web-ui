@@ -92,6 +92,17 @@ Execute commands:
     cd $GOPATH/src/github.com/bnhf/openvpn-tap-external-web-ui
     go mod tidy
     bee run -gendoc=true
+    
+Files and folders needed to create archive (tar.xz) for use in build.sh:
+
+    LICENSE
+    conf (folder)
+    go.mod
+    go.sum
+    openvpn-tap-external-web-ui
+    static (folder)
+    swagger (folder)
+    views
 
 ## Todo
 
