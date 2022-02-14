@@ -13,7 +13,7 @@ services:
     volumes:
      - ./openvpn-data/conf:/etc/openvpn
   gui:
-    image: tyzbit/openvpn-web-ui
+    image: bnhf/openvpn-tap-external-web-ui
     container_name: openvpn-gui
     environment:
     - OPENVPN_ADMIN_USERNAME=admin
