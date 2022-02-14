@@ -82,13 +82,15 @@ It starts two docker containers. One with OpenVPN server and second with OpenVPN
 ### Dev
 
 Requirements:
-* golang environments
-* [beego](https://beego.me/docs/install/)
+* [golang environments](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)
+* [beego](https://beego.vip/)
+* [bee] (https://github.com/beego/bee)
 
 Execute commands:
 
-    go get github.com/bnhf/openvpn-tap-external-web-ui
+    go get -u github.com/bnhf/openvpn-tap-external-web-ui
     cd $GOPATH/src/github.com/bnhf/openvpn-tap-external-web-ui
+    go mod tidy
     bee run -gendoc=true
 
 ## Todo
