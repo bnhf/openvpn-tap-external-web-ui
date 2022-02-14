@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:bullseye
 WORKDIR /opt
 EXPOSE 8080
 
