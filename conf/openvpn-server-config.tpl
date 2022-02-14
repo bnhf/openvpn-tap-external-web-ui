@@ -16,7 +16,6 @@ dh {{ .Dh }}
 
 server 10.8.0.0 255.255.255.0
 ifconfig-pool-persist {{ .IfconfigPoolPersist }}
-push "route 10.8.0.0 255.255.255.0"
 push "dhcp-option DNS {{ .DNSServerOne }}"
 push "dhcp-option DNS {{ .DNSServerTwo }}"
 

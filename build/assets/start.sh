@@ -14,6 +14,6 @@ if [ ! -f $OVDIR/.provisioned ]; then
 fi
 cd /opt/openvpn-gui
 mkdir -p db
-./openvpn-web-ui
+./openvpn-tap-external-web-ui
 echo "Starting!"
 
