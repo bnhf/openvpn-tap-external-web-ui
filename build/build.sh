@@ -2,7 +2,7 @@
 
 set -e
 
-PKGFILE=openvpn-web-ui.tar.xz
+PKGFILE=openvpn-tap-external-web-ui.tar.xz
 
 cp -f ../$PKGFILE ./
 
