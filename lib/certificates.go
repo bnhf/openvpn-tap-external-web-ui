@@ -43,7 +43,7 @@ func ReadCerts(path string) ([]*Cert, error) {
 		fields := strings.Split(trim(line), "\t")
 		if len(fields) != 6 {
 			return certs,
-				fmt.Errorf("Incorrect number of lines in line: \n%s\n. Expected %d, found %d",
+				fmt.Errorf("incorrect number of lines in line: \n%s\n. Expected %d, found %d",
 					line, 6, len(fields))
 		}
 		expT, _ := time.Parse("060102150405Z", fields[1])
@@ -72,9 +72,9 @@ func parseDetails(d string) *Details {
 			fields := strings.Split(trim(line), "=")
 			switch fields[0] {
 			case "name":
-				details.Name = fields[1]
-			case "CN":
 				details.CN = fields[1]
+			case "CN":
+				details.Name = fields[1]
 			case "C":
 				details.Country = fields[1]
 			case "O":
@@ -94,13 +94,13 @@ func trim(s string) string {
 }
 
 func CreateCertificate(name string) error {
-	rsaPath := "/usr/share/easy-rsa/"
-	varsPath := models.GlobalCfg.OVConfigPath + "keys/vars"
+	rsaPath := "/etc/openvpn/easy-rsa"
+	//	varsPath := models.GlobalCfg.OVConfigPath + "easy-rsa/vars"
 	cmd := exec.Command("/bin/bash", "-c",
 		fmt.Sprintf(
-			"source %s &&"+
-				"export KEY_NAME=%s &&"+
-				"%s/build-key --batch %s", varsPath, name, rsaPath, name))
+			//			"source %s &&"+
+			"export KEY_NAME=%s &&"+
+				"%s/easyrsa --batch build-client-full %s nopass", name, rsaPath, name))
 	cmd.Dir = models.GlobalCfg.OVConfigPath
 	output, err := cmd.CombinedOutput()
 	if err != nil {

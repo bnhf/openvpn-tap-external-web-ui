@@ -43,7 +43,7 @@ func (c *CertificatesController) Download() {
 
 	zw := zip.NewWriter(c.Controller.Ctx.ResponseWriter)
 
-	keysPath := models.GlobalCfg.OVConfigPath + "keys/"
+	keysPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/"
 	if cfgPath, err := saveClientConfig(name); err == nil {
 		addFileToZip(zw, cfgPath)
 	}
@@ -90,7 +90,7 @@ func (c *CertificatesController) Get() {
 }
 
 func (c *CertificatesController) showCerts() {
-	path := models.GlobalCfg.OVConfigPath + "keys/index.txt"
+	path := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/index.txt"
 	certs, err := lib.ReadCerts(path)
 	if err != nil {
 		beego.Error(err)
@@ -150,7 +150,7 @@ func saveClientConfig(name string) (string, error) {
 	cfg.Keysize = serverConfig.Keysize
 	cfg.ExtraClientOptions = serverConfig.ExtraClientOptions
 
-	destPath := models.GlobalCfg.OVConfigPath + "keys/" + name + ".conf"
+	destPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/" + name + ".conf"
 	if err := config.SaveToFile("conf/openvpn-client-config.tpl",
 		cfg, destPath); err != nil {
 		beego.Error(err)
