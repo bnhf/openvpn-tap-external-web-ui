@@ -3,7 +3,7 @@ management {{ .Management }}
 port {{ .Port }}
 proto {{ .Proto }}
 
-dev tun
+dev tap0
 
 ca {{ .Ca }}
 cert {{ .Cert }}
@@ -14,7 +14,7 @@ keysize {{ .Keysize }}
 auth {{ .Auth }}
 dh {{ .Dh }}
 
-server 10.8.0.0 255.255.255.0
+server-bridge {{ .Server }}
 ifconfig-pool-persist {{ .IfconfigPoolPersist }}
 push "route 10.8.0.0 255.255.255.0"
 push "dhcp-option DNS {{ .DNSServerOne }}"
