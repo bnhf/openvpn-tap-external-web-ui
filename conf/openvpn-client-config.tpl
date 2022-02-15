@@ -1,4 +1,4 @@
-dev tun
+dev tap
 persist-tun
 persist-key
 client

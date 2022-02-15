@@ -108,7 +108,7 @@ func createDefaultOVConfig() {
 			IfconfigPoolPersist: "ipp.txt",
 			Management:          "0.0.0.0 2080",
 			MaxClients:          100,
-			Server:              "10.8.0.0 255.255.255.0",
+			Server:              "192.168.1.100 255.255.255.0 192.168.1.2 192.168.1.8",
 			Ca:                  "keys/ca.crt",
 			Cert:                "keys/server.crt",
 			Key:                 "keys/server.key",
