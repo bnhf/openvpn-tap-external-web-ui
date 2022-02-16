@@ -43,7 +43,7 @@ func ReadCerts(path string) ([]*Cert, error) {
 		fields := strings.Split(trim(line), "\t")
 		if len(fields) != 6 {
 			return certs,
-				fmt.Errorf("Incorrect number of lines in line: \n%s\n. Expected %d, found %d",
+				fmt.Errorf("incorrect number of lines in line: \n%s\n. Expected %d, found %d",
 					line, 6, len(fields))
 		}
 		expT, _ := time.Parse("060102150405Z", fields[1])
