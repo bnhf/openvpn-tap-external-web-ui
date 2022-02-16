@@ -94,13 +94,13 @@ func trim(s string) string {
 }
 
 func CreateCertificate(name string) error {
-	rsaPath := "/etc/openvpn/easy-rsa/"
-	varsPath := models.GlobalCfg.OVConfigPath + "easy-rsa/vars"
+	rsaPath := "/etc/openvpn/easy-rsa"
+	//	varsPath := models.GlobalCfg.OVConfigPath + "easy-rsa/vars"
 	cmd := exec.Command("/bin/bash", "-c",
 		fmt.Sprintf(
-			"source %s &&"+
-				"export KEY_NAME=%s &&"+
-				"%s/easyrsa --batch build-client-full %s nopass", varsPath, name, rsaPath, name))
+			//			"source %s &&"+
+			"export KEY_NAME=%s &&"+
+				"%s/easyrsa --batch build-client-full %s nopass", name, rsaPath, name))
 	cmd.Dir = models.GlobalCfg.OVConfigPath
 	output, err := cmd.CombinedOutput()
 	if err != nil {
