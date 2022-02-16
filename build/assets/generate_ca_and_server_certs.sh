@@ -16,10 +16,10 @@ echo "Generating CA cert"
 #$EASY_RSA/build-ca
 export EASY_RSA="${EASY_RSA:-.}"
 
-$EASY_RSA/pkitool --initca $*
+$EASY_RSA/easyrsa --batch build-ca nopass $*
 
 export KEY_NAME=$SERVER_NAME
 
 echo "Generating server cert"
 #$EASY_RSA/build-key-server $SERVER_NAME
-$EASY_RSA/pkitool --server $SERVER_NAME
+$EASY_RSA/easyrsa --batch build-server-full $SERVER_NAME nopass
