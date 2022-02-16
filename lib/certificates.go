@@ -95,7 +95,7 @@ func trim(s string) string {
 
 func CreateCertificate(name string) error {
 	rsaPath := "/etc/openvpn/easy-rsa/"
-	varsPath := models.GlobalCfg.OVConfigPath + "keys/vars"
+	varsPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/vars"
 	cmd := exec.Command("/bin/bash", "-c",
 		fmt.Sprintf(
 			"source %s &&"+
