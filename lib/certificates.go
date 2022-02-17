@@ -72,9 +72,9 @@ func parseDetails(d string) *Details {
 			fields := strings.Split(trim(line), "=")
 			switch fields[0] {
 			case "name":
-				details.Name = fields[1]
-			case "CN":
 				details.CN = fields[1]
+			case "CN":
+				details.Name = fields[1]
 			case "C":
 				details.Country = fields[1]
 			case "O":
