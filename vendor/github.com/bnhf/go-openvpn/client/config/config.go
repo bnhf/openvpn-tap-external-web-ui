@@ -2,8 +2,8 @@ package config
 
 import (
 	"bytes"
-	"html/template"
 	"io/ioutil"
+	"text/template"
 )
 
 var defaultConfig = Config{

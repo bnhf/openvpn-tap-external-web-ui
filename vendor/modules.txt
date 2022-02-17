@@ -14,7 +14,7 @@ github.com/astaxie/beego/validation
 # github.com/beorn7/perks v1.0.1
 ## explicit; go 1.11
 github.com/beorn7/perks/quantile
-# github.com/bnhf/go-openvpn v0.0.0-20220213185925-728672a873c4
+# github.com/bnhf/go-openvpn v0.0.0-20220217215019-9ce6cf26b819
 ## explicit
 github.com/bnhf/go-openvpn/client/config
 github.com/bnhf/go-openvpn/server/config
