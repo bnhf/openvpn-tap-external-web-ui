@@ -1,7 +1,11 @@
 # OpenVPN-TAP-external-web-ui
 
 ## Summary
-OpenVPN TAP (bridge) external (non-Docker) server web administration interface.
+OpenVPN TAP (bridge) external server (non-Docker) web administration interface. Intended for use with PiVPN (on amd64 versions of Debian or Ubuntu). PiVPN should be installed first!
+
+Here's a post on setting PiVPN in TAP server mode. It's written for the Raspberry Pi, but the steps are the same on Debian or Ubuntu. One exception is your physical ethernet adapter, which will likely not be eth0 in the openvpn-bridge script:
+
+https://technologydragonslayer.com/2022/01/16/installing-an-openvpn-tap-server-on-a-raspberry-pi-using-pivpn/
 
 Goal: create quick to deploy and easy to use solution that makes work with small OpenVPN environments a breeze.
 
@@ -9,9 +13,10 @@ If you have docker and Portainer installed, you can jump directly to [installati
 
 ![Status page](docs/images/screenshot-brix-pc2_8080-2022.02.03-16_09_24.png?raw=true)
 
-Please note this project is in alpha stage. It still needs some work to make it secure and feature complete.
 If you have a functioning OpenVPN TAP Server on the same host as your Docker containers, you should be able
-to use this fork to monitor OpenVPN connections. Certificate generation and management is not finished.
+to use this fork to monitor OpenVPN connections.
+
+Certificate generation and management is also available, and should be compatible with PiVPN. You can use either this web-ui to create client certificates, or use PiVPN from the commandline.
 
 ## Motivation
 
@@ -24,7 +29,7 @@ to use this fork to monitor OpenVPN connections. Certificate generation and mana
 * ability to download client certificates as a zip package with client configuration inside
 * log preview
 * modification of OpenVPN configuration file through web interface
-* this fork is designed to use an external version of OpenVPN configured for TAP (bridge) -- which is not possible with Docker
+* this fork is designed to use an external version of OpenVPN configured for TAP (bridge) -- which is probably not possible via Docker
 
 ## Screenshots
 
@@ -85,6 +90,7 @@ Requirements:
 * [golang environments](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)
 * [beego](https://beego.vip/)
 * [bee](https://github.com/beego/bee)
+* [docker](https://docs.docker.com/engine/install/debian/#install-using-the-convenience-script)
 
 Execute commands:
 
@@ -92,6 +98,9 @@ Execute commands:
     cd $GOPATH/src/github.com/bnhf/openvpn-tap-external-web-ui
     go mod tidy
     bee run -gendoc=true
+    bee pack -exr='^vendor|^data.db|^build|^README.md|^docs'
+    cd build
+    ./build.sh
     
 Files and folders needed to create archive (tar.xz) for use in build.sh:
 
