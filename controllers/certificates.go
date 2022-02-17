@@ -191,7 +191,7 @@ func saveClientSingleConfig(name string, pathString string) (string, error) {
 	cfg.Keysize = serverConfig.Keysize
 
 	destPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/" + name + ".ovpn"
-	if err := config.SaveToFile("conf/openvpn-client-config-ovpn.tpl",
+	if err := config.SaveToFile("conf/openvpn-client-config.ovpn.tpl",
 		cfg, destPath); err != nil {
 		beego.Error(err)
 		return "", err
