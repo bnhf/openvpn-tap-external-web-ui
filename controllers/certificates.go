@@ -4,6 +4,7 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -33,6 +34,21 @@ func (c *CertificatesController) NestPrepare() {
 	}
 }
 
+// @router /certificates/single-config/:key [get]
+func (c *CertificatesController) DownloadSingleConfig() {
+	name := c.GetString(":key")
+	filename := fmt.Sprintf("%s.ovpn", name)
+
+	c.Ctx.Output.Header("Content-Type", "text/plain")
+	c.Ctx.Output.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
+
+	keysPath := models.GlobalCfg.OVConfigPath + "keys/"
+	if cfgPath, err := saveClientSingleConfig(name, keysPath); err == nil {
+		c.Ctx.Output.Download(cfgPath, filename)
+	}
+
+}
+
 // @router /certificates/:key [get]
 func (c *CertificatesController) Download() {
 	name := c.GetString(":key")
@@ -48,8 +64,8 @@ func (c *CertificatesController) Download() {
 		addFileToZip(zw, cfgPath)
 	}
 	addFileToZip(zw, keysPath+"ca.crt")
-	addFileToZip(zw, keysPath+name+".crt")
-	addFileToZip(zw, keysPath+name+".key")
+	addFileToZip(zw, keysPath+"issued/"+name+".crt")
+	addFileToZip(zw, keysPath+"private/"+name+".key")
 
 	if err := zw.Close(); err != nil {
 		beego.Error(err)
@@ -158,4 +174,37 @@ func saveClientConfig(name string) (string, error) {
 	}
 
 	return destPath, nil
+}
+
+func saveClientSingleConfig(name string, pathString string) (string, error) {
+	cfg := config.New()
+	cfg.ServerAddress = models.GlobalCfg.ServerAddress
+	cfg.Cert = readCert(pathString + "../easy-rsa/pki/issued/" + name + ".crt")
+	cfg.Key = readCert(pathString + "../easy-rsa/pki/private/" + name + ".key")
+	cfg.Ca = readCert(pathString + "../easy-rsa/pki/" + "ca.crt")
+	serverConfig := models.OVConfig{Profile: "default"}
+	serverConfig.Read("Profile")
+	cfg.Port = serverConfig.Port
+	cfg.Proto = serverConfig.Proto
+	cfg.Auth = serverConfig.Auth
+	cfg.Cipher = serverConfig.Cipher
+	cfg.Keysize = serverConfig.Keysize
+
+	destPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/" + name + ".ovpn"
+	if err := config.SaveToFile("conf/openvpn-client-config.ovpn.tpl",
+		cfg, destPath); err != nil {
+		beego.Error(err)
+		return "", err
+	}
+
+	return destPath, nil
+}
+
+func readCert(path string) string {
+	buff, err := ioutil.ReadFile(path) // just pass the file name
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(buff)
 }

@@ -16,8 +16,8 @@ github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
-github.com/bnhf/go-openvpn v0.0.0-20220213185925-728672a873c4 h1:bWjKm0fALsdwR7m0W1ZYS8JQe7j65mUpL8nzhHhDYMo=
-github.com/bnhf/go-openvpn v0.0.0-20220213185925-728672a873c4/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
+github.com/bnhf/go-openvpn v0.0.0-20220217215019-9ce6cf26b819 h1:lhJR9wrc+fwNc2nJM40MvwgleP+O0ySihYCd9zo/e5E=
+github.com/bnhf/go-openvpn v0.0.0-20220217215019-9ce6cf26b819/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
 github.com/bradfitz/gomemcache v0.0.0-20180710155616-bc664df96737/go.mod h1:PmM6Mmwb0LSuEubjR8N7PtNe1KxZLtOUHtbeikc5h60=
 github.com/casbin/casbin v1.7.0/go.mod h1:c67qKN6Oum3UF5Q1+BByfFxkwKvhwW57ITjqwtzR1KE=
 github.com/cespare/xxhash/v2 v2.1.1 h1:6MnRN8NT7+YBpUIWxHtefFZOKTAPgGjpQSxqLNn0+qY=

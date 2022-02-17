@@ -70,4 +70,13 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["github.com/bnhf/openvpn-tap-external-web-ui/controllers:CertificatesController"] = append(beego.GlobalControllerRouter["github.com/bnhf/openvpn-tap-external-web-ui/controllers:CertificatesController"],
+        beego.ControllerComments{
+            Method: "DownloadSingleConfig",
+            Router: "/certificates/single-config/:key",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
 }

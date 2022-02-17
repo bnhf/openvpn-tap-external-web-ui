@@ -20,6 +20,10 @@ echo "set_var EASYRSA_REQ_ORG       \"$ORG\""      >> $VARS
 echo "set_var EASYRSA_REQ_EMAIL     \"$EMAIL\""    >> $VARS
 echo "set_var EASYRSA_REQ_OU        \"$OU\""       >> $VARS
 
+# Append name=server to the end of the first line of index.txt
+
+sed -i ' 1 s/.*/&\/name=server/' /etc/openvpn/easy-rsa/pki/index.txt
+
 # $EASY_RSA/clean-all
 # source /etc/openvpn/keys/vars
 # export KEY_NAME=$CA_NAME
