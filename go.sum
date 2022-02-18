@@ -16,10 +16,6 @@ github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
-github.com/bnhf/go-openvpn v0.0.0-20220217215019-9ce6cf26b819 h1:lhJR9wrc+fwNc2nJM40MvwgleP+O0ySihYCd9zo/e5E=
-github.com/bnhf/go-openvpn v0.0.0-20220217215019-9ce6cf26b819/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
-github.com/bnhf/go-openvpn v0.0.0-20220218003109-f5a78408d890 h1:EjpxTyIMerDif6eSADNe+JzY7GA9l5WdGUpBpku8jhQ=
-github.com/bnhf/go-openvpn v0.0.0-20220218003109-f5a78408d890/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
 github.com/bnhf/go-openvpn v0.0.0-20220218212450-9249293b82b4 h1:eY8MnCCAmC+TwlBhzC+rC4J99qB5d/iZFUu4xx4qBGo=
 github.com/bnhf/go-openvpn v0.0.0-20220218212450-9249293b82b4/go.mod h1:32LE19thGzYUZT71w/EbOvyT3v1f+qd953B/kAjnXAc=
 github.com/bradfitz/gomemcache v0.0.0-20180710155616-bc664df96737/go.mod h1:PmM6Mmwb0LSuEubjR8N7PtNe1KxZLtOUHtbeikc5h60=
