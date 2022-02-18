@@ -156,7 +156,7 @@
               <th>KB Received</th>
               <th>KB Sent</th>
               <th>Connected Since</th>
-              <th>Username</th>
+              <th>Data Cipher</th>
               <th></th>
             </tr>
             </thead>
@@ -178,12 +178,12 @@
                 <td align="right" style="padding-right:20px">
                     {{printkb .BytesSent}}
                 </td>
-                <td>{{.ConnectedSinceT}}</td>
+                <td>{{.ConnectedSince}}</td>
                 <td>
-                  {{if eq .Username "UNDEF"}}
+                <!--  {{if eq .Username "UNDEF"}}
                     -
-                  {{else}}
-                    {{.Username}}
+                  {{else}} -->
+                    {{.DataCipher}}
                   {{end}}
                 </td>
                 <td>
