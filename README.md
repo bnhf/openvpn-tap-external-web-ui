@@ -16,17 +16,17 @@ If you have docker and Portainer installed, you can jump directly to [installati
 If you have a functioning OpenVPN TAP Server on the same host as your Docker containers, you should be able
 to use this fork to monitor OpenVPN connections.
 
-Certificate generation and management is also available, and should be compatible with PiVPN. You can use either this web-ui to create client certificates, or use PiVPN from the commandline.
+Certificate generation and management is also available, and should be compatible with PiVPN. You can use either this web-ui to create client certificates, or use PiVPN from the commandline. Use PiVPN from the commandline (with elevated priveleges) to revoke certificates.
 
 ## Motivation
 
-* to create a version of this project that will work with OpenVPN TAP servers
+* to create a version of this project that will work with OpenVPN TAP servers created using PiVPN (amd64 only)
 
 ## Features
 
 * status page that shows server statistics and list of connected clients
 * easy creation of client certificates
-* ability to download client certificates as a zip package with client configuration inside
+* ability to download client certificates as a zip package with client configuration inside or as a single .ovpn file
 * log preview
 * modification of OpenVPN configuration file through web interface
 * this fork is designed to use an external version of OpenVPN configured for TAP (bridge) -- which is probably not possible via Docker
@@ -40,48 +40,28 @@ Certificate generation and management is also available, and should be compatibl
 After startup web service is visible on port 8080. To login use the following default credentials:
 
 * username: admin
-* password: b3secure (this will be soon replaced with random password)
+* password: b3secure
 
 Please change password to your own immediately!
 
 ### Prod
 
 Requirements:
-* docker and Portainer
-* on firewall open ports: 1194/udp and 8080/tcp
+* Docker, Portainer, PiVPN, Debian or Ubuntu
+* on firewall open ports: 8080/tcp
 
 Setup your Portainer Stacks page as shown, inserting environment variables for creating certificates:
 
 ![Status page](docs/images/screenshot-brix-pc2_9443-2022.02.03-15_35_24.png?raw=true)
 
 
-It starts two docker containers. One with OpenVPN server and second with OpenVPNAdmin web application. Through a docker volume it creates following directory structure:
-
+This fork uses a single docker container with the OpenVPNAdmin web application. Through a docker volume it creates following directory structure for the database, but otherwise links to /etc/openvpn in the host. The intention is for PiVPN to be able to operate as usual, with PiVPN commanline options still available:
 
     .
     ├── docker-compose.yml
     └── openvpn-data
-        ├── conf
-        │   ├── dh2048.pem
-        │   ├── ipp.txt
-        │   ├── keys
-        │   │   ├── 01.pem
-        │   │   ├── ca.crt
-        │   │   ├── ca.key
-        │   │   ├── index.txt
-        │   │   ├── index.txt.attr
-        │   │   ├── index.txt.old
-        │   │   ├── serial
-        │   │   ├── serial.old
-        │   │   ├── server.crt
-        │   │   ├── server.csr
-        │   │   ├── server.key
-        │   │   └── vars
-        │   ├── openvpn.log
-        │   └── server.conf
-        └── db
+         └── db
             └── data.db
-
 
 
 ### Dev
@@ -91,6 +71,12 @@ Requirements:
 * [beego](https://beego.vip/)
 * [bee](https://github.com/beego/bee)
 * [docker](https://docs.docker.com/engine/install/debian/#install-using-the-convenience-script)
+
+Optional, but recommended:
+
+* [Portainer](https://docs.portainer.io/v/ce-2.9/start/install/server/docker/linux)
+* [GitHub Desktop for Linux](https://gist.github.com/berkorbay/6feda478a00b0432d13f1fc0a50467f1)
+* [Visual Studio Code](https://code.visualstudio.com/download)
 
 Execute commands:
 
@@ -102,41 +88,26 @@ Execute commands:
     cd build
     ./build.sh
     
-Files and folders needed to create archive (tar.xz) for use in build.sh:
-
-    LICENSE
-    conf (folder)
-    go.mod
-    go.sum
-    openvpn-tap-external-web-ui
-    static (folder)
-    swagger (folder)
-    views
 
 ## Todo
 
-* add unit tests
-* add option to modify certificate properties
-* generate random admin password at initialization phase
-* add versioning
-* add automatic ssl/tls (check how [ponzu](https://github.com/ponzu-cms/ponzu) did it)
+* arm64 version for the Raspberry Pi
+* Update "Memory usage" on the status page to display data from the host, rather than the container
 
 
 ## License
 
 This project uses [MIT license](LICENSE)
 
+
 ## Remarks
 
-### Vendoring
-https://github.com/kardianos/govendor is used for vendoring.
+Numerous things have been updated to bring this project forward from its 2017 roots. It's now based on Debian 11 (in the container build), and is using the latest OpenVPN and EasyRSA, thanks to PiVPN. All of the project dependencies (vendoring) have been updated to current levels in 2022.
 
-To update dependencies from GOPATH:
+Courtsey of @tyzbit, the ability to specify DNS servers, and additional client/server options have been added. Also @mendoza-conicet contributed code for being able to download a single .ovpn file.
 
-`govendor update +v`
+And, of course, many thanks to @adamwalach for his excellent original work to create this project!
+
 
 ### Template
 AdminLTE - dashboard & control panel theme. Built on top of Bootstrap 3.
-
-Preview: https://almsaeedstudio.com/themes/AdminLTE/index2.html
-

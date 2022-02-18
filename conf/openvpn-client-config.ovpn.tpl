@@ -14,9 +14,11 @@ tls-client
 <ca>
 {{ .Ca }}
 </ca>
+
 <cert>
 {{ .Cert }}
 </cert>
+
 <key>
 {{ .Key }}
 </key>
