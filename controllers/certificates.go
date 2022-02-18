@@ -179,9 +179,9 @@ func saveClientConfig(name string) (string, error) {
 func saveClientSingleConfig(name string, pathString string) (string, error) {
 	cfg := config.New()
 	cfg.ServerAddress = models.GlobalCfg.ServerAddress
-	cfg.Cert = readCert(pathString + "issued/" + name + ".crt")
-	cfg.Key = readCert(pathString + "private/" + name + ".key")
-	cfg.Ca = readCert(pathString + "ca.crt")
+	cfg.Cert = readCert(pathString + "../easy-rsa/pki/issued/" + name + ".crt")
+	cfg.Key = readCert(pathString + "../easy-rsa/pki/private/" + name + ".key")
+	cfg.Ca = readCert(pathString + "../easy-rsa/pki/" + "ca.crt")
 	serverConfig := models.OVConfig{Profile: "default"}
 	serverConfig.Read("Profile")
 	cfg.Port = serverConfig.Port
