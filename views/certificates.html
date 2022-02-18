@@ -33,7 +33,7 @@
             <tbody>
 
             {{range .certificates}}
-              {{ if ne .Details.Name "server"}}
+              {{ if ne .Details.CN "server"}}
               <tr>
                   <td>
                     <a href="{{urlfor "CertificatesController.Download" ":key" .Details.Name}}">

@@ -1,17 +1,5 @@
 version: '2'
 services:
-  openvpn:
-    cap_add:
-     - NET_ADMIN
-    image: tyzbit/openvpn
-    container_name: openvpn
-    ports:
-     - "1194:1194/udp"
-    restart: always
-    depends_on:
-      - "gui"
-    volumes:
-     - ./openvpn-data/conf:/etc/openvpn
   gui:
     image: bnhf/openvpn-tap-external-web-ui
     container_name: openvpn-gui
@@ -19,7 +7,7 @@ services:
     - OPENVPN_ADMIN_USERNAME=admin
     - OPENVPN_ADMIN_PASSWORD=b3secure
     - COUNTRY=${COUNTRY}
-    - PROVINCE=G${PROVINCE}
+    - PROVINCE=${PROVINCE}
     - CITY=${CITY}
     - ORG=${ORG}
     - EMAIL=${EMAIL}
