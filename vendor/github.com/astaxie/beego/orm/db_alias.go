@@ -21,8 +21,6 @@ import (
 	"reflect"
 	"sync"
 	"time"
-
-	lru "github.com/hashicorp/golang-lru"
 )
 
 // DriverType database driver constant int.
@@ -108,8 +106,8 @@ func (ac *_dbCache) getDefault() (al *alias) {
 
 type DB struct {
 	*sync.RWMutex
-	DB             *sql.DB
-	stmtDecorators *lru.Cache
+	DB    *sql.DB
+	stmts map[string]*sql.Stmt
 }
 
 func (d *DB) Begin() (*sql.Tx, error) {
@@ -120,36 +118,22 @@ func (d *DB) BeginTx(ctx context.Context, opts *sql.TxOptions) (*sql.Tx, error) 
 	return d.DB.BeginTx(ctx, opts)
 }
 
-//su must call release to release *sql.Stmt after using
-func (d *DB) getStmtDecorator(query string) (*stmtDecorator, error) {
+func (d *DB) getStmt(query string) (*sql.Stmt, error) {
 	d.RLock()
-	c, ok := d.stmtDecorators.Get(query)
-	if ok {
-		c.(*stmtDecorator).acquire()
+	if stmt, ok := d.stmts[query]; ok {
 		d.RUnlock()
-		return c.(*stmtDecorator), nil
+		return stmt, nil
 	}
 	d.RUnlock()
 
-	d.Lock()
-	c, ok = d.stmtDecorators.Get(query)
-	if ok {
-		c.(*stmtDecorator).acquire()
-		d.Unlock()
-		return c.(*stmtDecorator), nil
-	}
-
 	stmt, err := d.Prepare(query)
 	if err != nil {
-		d.Unlock()
 		return nil, err
 	}
-	sd := newStmtDecorator(stmt)
-	sd.acquire()
-	d.stmtDecorators.Add(query, sd)
+	d.Lock()
+	d.stmts[query] = stmt
 	d.Unlock()
-
-	return sd, nil
+	return stmt, nil
 }
 
 func (d *DB) Prepare(query string) (*sql.Stmt, error) {
@@ -161,63 +145,52 @@ func (d *DB) PrepareContext(ctx context.Context, query string) (*sql.Stmt, error
 }
 
 func (d *DB) Exec(query string, args ...interface{}) (sql.Result, error) {
-	sd, err := d.getStmtDecorator(query)
+	stmt, err := d.getStmt(query)
 	if err != nil {
 		return nil, err
 	}
-	stmt := sd.getStmt()
-	defer sd.release()
 	return stmt.Exec(args...)
 }
 
 func (d *DB) ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error) {
-	sd, err := d.getStmtDecorator(query)
+	stmt, err := d.getStmt(query)
 	if err != nil {
 		return nil, err
 	}
-	stmt := sd.getStmt()
-	defer sd.release()
 	return stmt.ExecContext(ctx, args...)
 }
 
 func (d *DB) Query(query string, args ...interface{}) (*sql.Rows, error) {
-	sd, err := d.getStmtDecorator(query)
+	stmt, err := d.getStmt(query)
 	if err != nil {
 		return nil, err
 	}
-	stmt := sd.getStmt()
-	defer sd.release()
 	return stmt.Query(args...)
 }
 
 func (d *DB) QueryContext(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error) {
-	sd, err := d.getStmtDecorator(query)
+	stmt, err := d.getStmt(query)
 	if err != nil {
 		return nil, err
 	}
-	stmt := sd.getStmt()
-	defer sd.release()
 	return stmt.QueryContext(ctx, args...)
 }
 
 func (d *DB) QueryRow(query string, args ...interface{}) *sql.Row {
-	sd, err := d.getStmtDecorator(query)
+	stmt, err := d.getStmt(query)
 	if err != nil {
 		panic(err)
 	}
-	stmt := sd.getStmt()
-	defer sd.release()
 	return stmt.QueryRow(args...)
 
 }
 
 func (d *DB) QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row {
-	sd, err := d.getStmtDecorator(query)
+
+	stmt, err := d.getStmt(query)
 	if err != nil {
 		panic(err)
 	}
-	stmt := sd.getStmt()
-	defer sd.release()
 	return stmt.QueryRowContext(ctx, args)
 }
 
@@ -295,9 +268,9 @@ func addAliasWthDB(aliasName, driverName string, db *sql.DB) (*alias, error) {
 	al.Name = aliasName
 	al.DriverName = driverName
 	al.DB = &DB{
-		RWMutex:        new(sync.RWMutex),
-		DB:             db,
-		stmtDecorators: newStmtDecoratorLruWithEvict(),
+		RWMutex: new(sync.RWMutex),
+		DB:      db,
+		stmts:   make(map[string]*sql.Stmt),
 	}
 
 	if dr, ok := drivers[driverName]; ok {
@@ -401,7 +374,6 @@ func SetMaxIdleConns(aliasName string, maxIdleConns int) {
 func SetMaxOpenConns(aliasName string, maxOpenConns int) {
 	al := getDbAlias(aliasName)
 	al.MaxOpenConns = maxOpenConns
-	al.DB.DB.SetMaxOpenConns(maxOpenConns)
 	// for tip go 1.2
 	if fun := reflect.ValueOf(al.DB).MethodByName("SetMaxOpenConns"); fun.IsValid() {
 		fun.Call([]reflect.Value{reflect.ValueOf(maxOpenConns)})
@@ -422,48 +394,4 @@ func GetDB(aliasNames ...string) (*sql.DB, error) {
 		return al.DB.DB, nil
 	}
 	return nil, fmt.Errorf("DataBase of alias name `%s` not found", name)
-}
-
-type stmtDecorator struct {
-	wg   sync.WaitGroup
-	stmt *sql.Stmt
-}
-
-func (s *stmtDecorator) getStmt() *sql.Stmt {
-	return s.stmt
-}
-
-// acquire will add one
-// since this method will be used inside read lock scope,
-// so we can not do more things here
-// we should think about refactor this
-func (s *stmtDecorator) acquire() {
-	s.wg.Add(1)
-}
-
-func (s *stmtDecorator) release() {
-	s.wg.Done()
-}
-
-//garbage recycle for stmt
-func (s *stmtDecorator) destroy() {
-	go func() {
-		s.wg.Wait()
-		_ = s.stmt.Close()
-	}()
-}
-
-func newStmtDecorator(sqlStmt *sql.Stmt) *stmtDecorator {
-	return &stmtDecorator{
-		stmt: sqlStmt,
-	}
-}
-
-func newStmtDecoratorLruWithEvict() *lru.Cache {
-	// temporarily solution
-	// we fixed this problem in v2.x
-	cache, _ := lru.NewWithEvict(50, func(key interface{}, value interface{}) {
-		value.(*stmtDecorator).destroy()
-	})
-	return cache
 }

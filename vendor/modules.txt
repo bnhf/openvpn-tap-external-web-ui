@@ -1,5 +1,5 @@
-# github.com/astaxie/beego v1.12.3
-## explicit; go 1.13
+# github.com/astaxie/beego v1.12.0
+## explicit
 github.com/astaxie/beego
 github.com/astaxie/beego/config
 github.com/astaxie/beego/context
@@ -11,67 +11,33 @@ github.com/astaxie/beego/session
 github.com/astaxie/beego/toolbox
 github.com/astaxie/beego/utils
 github.com/astaxie/beego/validation
-# github.com/beorn7/perks v1.0.1
-## explicit; go 1.11
-github.com/beorn7/perks/quantile
 # github.com/bnhf/go-openvpn v0.0.0-20220218212450-9249293b82b4
 ## explicit
 github.com/bnhf/go-openvpn/client/config
 github.com/bnhf/go-openvpn/server/config
 github.com/bnhf/go-openvpn/server/mi
-# github.com/cespare/xxhash/v2 v2.1.1
-## explicit; go 1.11
-github.com/cespare/xxhash/v2
-# github.com/cloudfoundry/gosigar v1.3.3
-## explicit; go 1.17
+# github.com/cloudfoundry/gosigar v1.2.0
+## explicit
 github.com/cloudfoundry/gosigar
 github.com/cloudfoundry/gosigar/sys/windows
 # github.com/elazarl/go-bindata-assetfs v1.0.1
 ## explicit
 # github.com/go-sql-driver/mysql v1.6.0
 ## explicit; go 1.10
-# github.com/golang/protobuf v1.5.2
-## explicit; go 1.9
-github.com/golang/protobuf/proto
-github.com/golang/protobuf/ptypes
-github.com/golang/protobuf/ptypes/any
-github.com/golang/protobuf/ptypes/duration
-github.com/golang/protobuf/ptypes/timestamp
-# github.com/hashicorp/golang-lru v0.5.4
+# github.com/kr/pretty v0.3.0
 ## explicit; go 1.12
-github.com/hashicorp/golang-lru
-github.com/hashicorp/golang-lru/simplelru
-# github.com/kr/pretty v0.2.1
-## explicit; go 1.12
-# github.com/lib/pq v1.10.2
+# github.com/lib/pq v1.10.4
 ## explicit; go 1.13
 # github.com/mattn/go-sqlite3 v2.0.3+incompatible
 ## explicit
 github.com/mattn/go-sqlite3
-# github.com/matttproud/golang_protobuf_extensions v1.0.1
-## explicit
-github.com/matttproud/golang_protobuf_extensions/pbutil
+# github.com/onsi/ginkgo v1.16.5
+## explicit; go 1.16
+# github.com/onsi/gomega v1.18.1
+## explicit; go 1.16
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
-# github.com/prometheus/client_golang v1.11.0
-## explicit; go 1.13
-github.com/prometheus/client_golang/prometheus
-github.com/prometheus/client_golang/prometheus/internal
-github.com/prometheus/client_golang/prometheus/promhttp
-# github.com/prometheus/client_model v0.2.0
-## explicit; go 1.9
-github.com/prometheus/client_model/go
-# github.com/prometheus/common v0.26.0
-## explicit; go 1.11
-github.com/prometheus/common/expfmt
-github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
-github.com/prometheus/common/model
-# github.com/prometheus/procfs v0.6.0
-## explicit; go 1.13
-github.com/prometheus/procfs
-github.com/prometheus/procfs/internal/fs
-github.com/prometheus/procfs/internal/util
 # github.com/shiena/ansicolor v0.0.0-20200904210342-c7312218db18
 ## explicit
 github.com/shiena/ansicolor
@@ -80,7 +46,7 @@ github.com/shiena/ansicolor
 github.com/sirupsen/logrus
 # github.com/stretchr/testify v1.7.0
 ## explicit; go 1.13
-# golang.org/x/crypto v0.0.0-20220213190939-1e6e3497d506
+# golang.org/x/crypto v0.0.0-20220214200702-86341886e292
 ## explicit; go 1.17
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
@@ -105,40 +71,8 @@ golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
-# golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
-## explicit; go 1.11
-# google.golang.org/protobuf v1.26.0
-## explicit; go 1.9
-google.golang.org/protobuf/encoding/prototext
-google.golang.org/protobuf/encoding/protowire
-google.golang.org/protobuf/internal/descfmt
-google.golang.org/protobuf/internal/descopts
-google.golang.org/protobuf/internal/detrand
-google.golang.org/protobuf/internal/encoding/defval
-google.golang.org/protobuf/internal/encoding/messageset
-google.golang.org/protobuf/internal/encoding/tag
-google.golang.org/protobuf/internal/encoding/text
-google.golang.org/protobuf/internal/errors
-google.golang.org/protobuf/internal/filedesc
-google.golang.org/protobuf/internal/filetype
-google.golang.org/protobuf/internal/flags
-google.golang.org/protobuf/internal/genid
-google.golang.org/protobuf/internal/impl
-google.golang.org/protobuf/internal/order
-google.golang.org/protobuf/internal/pragma
-google.golang.org/protobuf/internal/set
-google.golang.org/protobuf/internal/strs
-google.golang.org/protobuf/internal/version
-google.golang.org/protobuf/proto
-google.golang.org/protobuf/reflect/protodesc
-google.golang.org/protobuf/reflect/protoreflect
-google.golang.org/protobuf/reflect/protoregistry
-google.golang.org/protobuf/runtime/protoiface
-google.golang.org/protobuf/runtime/protoimpl
-google.golang.org/protobuf/types/descriptorpb
-google.golang.org/protobuf/types/known/anypb
-google.golang.org/protobuf/types/known/durationpb
-google.golang.org/protobuf/types/known/timestamppb
+# gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127
+## explicit
 # gopkg.in/hlandau/easymetric.v1 v1.0.0
 ## explicit
 gopkg.in/hlandau/easymetric.v1/cexp
