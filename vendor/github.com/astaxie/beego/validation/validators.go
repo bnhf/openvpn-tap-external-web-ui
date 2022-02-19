@@ -19,11 +19,8 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
-	"sync"
 	"time"
 	"unicode/utf8"
-
-	"github.com/astaxie/beego/logs"
 )
 
 // CanSkipFuncs will skip valid if RequiredFirst is true and the struct field's value is empty
@@ -60,8 +57,6 @@ var MessageTmpls = map[string]string{
 	"ZipCode":      "Must be valid zipcode",
 }
 
-var once sync.Once
-
 // SetDefaultMessage set default messages
 // if not set, the default messages are
 //  "Required":     "Can not be empty",
@@ -89,12 +84,9 @@ func SetDefaultMessage(msg map[string]string) {
 		return
 	}
 
-	once.Do(func() {
-		for name := range msg {
-			MessageTmpls[name] = msg[name]
-		}
-	})
-	logs.Warn(`you must SetDefaultMessage at once`)
+	for name := range msg {
+		MessageTmpls[name] = msg[name]
+	}
 }
 
 // Validator interface
@@ -640,7 +632,7 @@ func (b Base64) GetLimitValue() interface{} {
 }
 
 // just for chinese mobile phone number
-var mobilePattern = regexp.MustCompile(`^((\+86)|(86))?1([356789][0-9]|4[579]|6[67]|7[0135678]|9[189])[0-9]{8}$`)
+var mobilePattern = regexp.MustCompile(`^((\+86)|(86))?(1(([35][0-9])|[8][0-9]|[7][01356789]|[4][579]))\d{8}$`)
 
 // Mobile check struct
 type Mobile struct {

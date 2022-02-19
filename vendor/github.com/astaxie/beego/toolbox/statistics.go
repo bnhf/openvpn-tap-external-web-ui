@@ -117,8 +117,8 @@ func (m *URLMap) GetMap() map[string]interface{} {
 
 // GetMapData return all mapdata
 func (m *URLMap) GetMapData() []map[string]interface{} {
-	m.lock.RLock()
-	defer m.lock.RUnlock()
+	m.lock.Lock()
+	defer m.lock.Unlock()
 
 	var resultLists []map[string]interface{}
 

@@ -123,13 +123,14 @@ func (app *App) Run(mws ...MiddleWare) {
 					httpsAddr = fmt.Sprintf("%s:%d", BConfig.Listen.HTTPSAddr, BConfig.Listen.HTTPSPort)
 					app.Server.Addr = httpsAddr
 				}
-				server := grace.NewServer(httpsAddr, app.Server.Handler)
+				server := grace.NewServer(httpsAddr, app.Handlers)
 				server.Server.ReadTimeout = app.Server.ReadTimeout
 				server.Server.WriteTimeout = app.Server.WriteTimeout
 				if BConfig.Listen.EnableMutualHTTPS {
 					if err := server.ListenAndServeMutualTLS(BConfig.Listen.HTTPSCertFile, BConfig.Listen.HTTPSKeyFile, BConfig.Listen.TrustCaFile); err != nil {
 						logs.Critical("ListenAndServeTLS: ", err, fmt.Sprintf("%d", os.Getpid()))
 						time.Sleep(100 * time.Microsecond)
+						endRunning <- true
 					}
 				} else {
 					if BConfig.Listen.AutoTLS {
@@ -144,14 +145,14 @@ func (app *App) Run(mws ...MiddleWare) {
 					if err := server.ListenAndServeTLS(BConfig.Listen.HTTPSCertFile, BConfig.Listen.HTTPSKeyFile); err != nil {
 						logs.Critical("ListenAndServeTLS: ", err, fmt.Sprintf("%d", os.Getpid()))
 						time.Sleep(100 * time.Microsecond)
+						endRunning <- true
 					}
 				}
-				endRunning <- true
 			}()
 		}
 		if BConfig.Listen.EnableHTTP {
 			go func() {
-				server := grace.NewServer(addr, app.Server.Handler)
+				server := grace.NewServer(addr, app.Handlers)
 				server.Server.ReadTimeout = app.Server.ReadTimeout
 				server.Server.WriteTimeout = app.Server.WriteTimeout
 				if BConfig.Listen.ListenTCP4 {
@@ -160,8 +161,8 @@ func (app *App) Run(mws ...MiddleWare) {
 				if err := server.ListenAndServe(); err != nil {
 					logs.Critical("ListenAndServe: ", err, fmt.Sprintf("%d", os.Getpid()))
 					time.Sleep(100 * time.Microsecond)
+					endRunning <- true
 				}
-				endRunning <- true
 			}()
 		}
 		<-endRunning
@@ -197,7 +198,7 @@ func (app *App) Run(mws ...MiddleWare) {
 				pool.AppendCertsFromPEM(data)
 				app.Server.TLSConfig = &tls.Config{
 					ClientCAs:  pool,
-					ClientAuth: BConfig.Listen.ClientAuth,
+					ClientAuth: tls.RequireAndVerifyClientCert,
 				}
 			}
 			if err := app.Server.ListenAndServeTLS(BConfig.Listen.HTTPSCertFile, BConfig.Listen.HTTPSKeyFile); err != nil {

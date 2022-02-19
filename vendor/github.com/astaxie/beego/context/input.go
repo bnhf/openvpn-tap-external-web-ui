@@ -71,9 +71,7 @@ func (input *BeegoInput) Reset(ctx *Context) {
 	input.CruSession = nil
 	input.pnames = input.pnames[:0]
 	input.pvalues = input.pvalues[:0]
-	input.dataLock.Lock()
 	input.data = nil
-	input.dataLock.Unlock()
 	input.RequestBody = []byte{}
 }
 
@@ -89,7 +87,7 @@ func (input *BeegoInput) URI() string {
 
 // URL returns request url path (without query string, fragment).
 func (input *BeegoInput) URL() string {
-	return input.Context.Request.URL.EscapedPath()
+	return input.Context.Request.URL.Path
 }
 
 // Site returns base site url as scheme://domain type.
@@ -284,11 +282,6 @@ func (input *BeegoInput) ParamsLen() int {
 func (input *BeegoInput) Param(key string) string {
 	for i, v := range input.pnames {
 		if v == key && i <= len(input.pvalues) {
-			// we cannot use url.PathEscape(input.pvalues[i])
-			// for example, if the value is /a/b
-			// after url.PathEscape(input.pvalues[i]), the value is %2Fa%2Fb
-			// However, the value is used in ControllerRegister.ServeHTTP
-			// and split by "/", so function crash...
 			return input.pvalues[i]
 		}
 	}
@@ -333,14 +326,8 @@ func (input *BeegoInput) Query(key string) string {
 		return val
 	}
 	if input.Context.Request.Form == nil {
-		input.dataLock.Lock()
-		if input.Context.Request.Form == nil {
-			input.Context.Request.ParseForm()
-		}
-		input.dataLock.Unlock()
+		input.Context.Request.ParseForm()
 	}
-	input.dataLock.RLock()
-	defer input.dataLock.RUnlock()
 	return input.Context.Request.Form.Get(key)
 }
 

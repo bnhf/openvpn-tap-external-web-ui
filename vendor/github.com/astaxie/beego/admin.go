@@ -21,11 +21,8 @@ import (
 	"net/http"
 	"os"
 	"reflect"
-	"strconv"
 	"text/template"
 	"time"
-
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/astaxie/beego/grace"
 	"github.com/astaxie/beego/logs"
@@ -58,21 +55,19 @@ func init() {
 	beeAdminApp = &adminApp{
 		routers: make(map[string]http.HandlerFunc),
 	}
-	// keep in mind that all data should be html escaped to avoid XSS attack
 	beeAdminApp.Route("/", adminIndex)
 	beeAdminApp.Route("/qps", qpsIndex)
 	beeAdminApp.Route("/prof", profIndex)
 	beeAdminApp.Route("/healthcheck", healthcheck)
 	beeAdminApp.Route("/task", taskStatus)
 	beeAdminApp.Route("/listconf", listConf)
-	beeAdminApp.Route("/metrics", promhttp.Handler().ServeHTTP)
 	FilterMonitorFunc = func(string, string, time.Duration, string, int) bool { return true }
 }
 
 // AdminIndex is the default http.Handler for admin module.
 // it matches url pattern "/".
 func adminIndex(rw http.ResponseWriter, _ *http.Request) {
-	writeTemplate(rw, map[interface{}]interface{}{}, indexTpl, defaultScriptsTpl)
+	execTpl(rw, map[interface{}]interface{}{}, indexTpl, defaultScriptsTpl)
 }
 
 // QpsIndex is the http.Handler for writing qps statistics map result info in http.ResponseWriter.
@@ -92,7 +87,7 @@ func qpsIndex(rw http.ResponseWriter, _ *http.Request) {
 		}
 	}
 
-	writeTemplate(rw, data, qpsTpl, defaultScriptsTpl)
+	execTpl(rw, data, qpsTpl, defaultScriptsTpl)
 }
 
 // ListConf is the http.Handler of displaying all beego configuration values as key/value pair.
@@ -110,8 +105,8 @@ func listConf(rw http.ResponseWriter, r *http.Request) {
 	case "conf":
 		m := make(M)
 		list("BConfig", BConfig, m)
-		m["AppConfigPath"] = template.HTMLEscapeString(appConfigPath)
-		m["AppConfigProvider"] = template.HTMLEscapeString(appConfigProvider)
+		m["AppConfigPath"] = appConfigPath
+		m["AppConfigProvider"] = appConfigProvider
 		tmpl := template.Must(template.New("dashboard").Parse(dashboardTpl))
 		tmpl = template.Must(tmpl.Parse(configTpl))
 		tmpl = template.Must(tmpl.Parse(defaultScriptsTpl))
@@ -129,7 +124,7 @@ func listConf(rw http.ResponseWriter, r *http.Request) {
 		}
 		data["Content"] = content
 		data["Title"] = "Routers"
-		writeTemplate(rw, data, routerAndFilterTpl, defaultScriptsTpl)
+		execTpl(rw, data, routerAndFilterTpl, defaultScriptsTpl)
 	case "filter":
 		var (
 			content = M{
@@ -156,9 +151,8 @@ func listConf(rw http.ResponseWriter, r *http.Request) {
 					resultList := new([][]string)
 					for _, f := range bf {
 						var result = []string{
-							// void xss
-							template.HTMLEscapeString(f.pattern),
-							template.HTMLEscapeString(utils.GetFuncName(f.filterFunc)),
+							f.pattern,
+							utils.GetFuncName(f.filterFunc),
 						}
 						*resultList = append(*resultList, result)
 					}
@@ -172,7 +166,7 @@ func listConf(rw http.ResponseWriter, r *http.Request) {
 
 		data["Content"] = content
 		data["Title"] = "Filters"
-		writeTemplate(rw, data, routerAndFilterTpl, defaultScriptsTpl)
+		execTpl(rw, data, routerAndFilterTpl, defaultScriptsTpl)
 	default:
 		rw.Write([]byte("command not support"))
 	}
@@ -213,8 +207,8 @@ func PrintTree() M {
 
 		printTree(resultList, t)
 
-		methods = append(methods, template.HTMLEscapeString(method))
-		methodsData[template.HTMLEscapeString(method)] = resultList
+		methods = append(methods, method)
+		methodsData[method] = resultList
 	}
 
 	content["Data"] = methodsData
@@ -233,21 +227,21 @@ func printTree(resultList *[][]string, t *Tree) {
 		if v, ok := l.runObject.(*ControllerInfo); ok {
 			if v.routerType == routerTypeBeego {
 				var result = []string{
-					template.HTMLEscapeString(v.pattern),
-					template.HTMLEscapeString(fmt.Sprintf("%s", v.methods)),
-					template.HTMLEscapeString(v.controllerType.String()),
+					v.pattern,
+					fmt.Sprintf("%s", v.methods),
+					v.controllerType.String(),
 				}
 				*resultList = append(*resultList, result)
 			} else if v.routerType == routerTypeRESTFul {
 				var result = []string{
-					template.HTMLEscapeString(v.pattern),
-					template.HTMLEscapeString(fmt.Sprintf("%s", v.methods)),
+					v.pattern,
+					fmt.Sprintf("%s", v.methods),
 					"",
 				}
 				*resultList = append(*resultList, result)
 			} else if v.routerType == routerTypeHandler {
 				var result = []string{
-					template.HTMLEscapeString(v.pattern),
+					v.pattern,
 					"",
 					"",
 				}
@@ -272,7 +266,7 @@ func profIndex(rw http.ResponseWriter, r *http.Request) {
 		result bytes.Buffer
 	)
 	toolbox.ProcessInput(command, &result)
-	data["Content"] = template.HTMLEscapeString(result.String())
+	data["Content"] = result.String()
 
 	if format == "json" && command == "gc summary" {
 		dataJSON, err := json.Marshal(data)
@@ -280,21 +274,23 @@ func profIndex(rw http.ResponseWriter, r *http.Request) {
 			http.Error(rw, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		writeJSON(rw, dataJSON)
+
+		rw.Header().Set("Content-Type", "application/json")
+		rw.Write(dataJSON)
 		return
 	}
 
-	data["Title"] = template.HTMLEscapeString(command)
+	data["Title"] = command
 	defaultTpl := defaultScriptsTpl
 	if command == "gc summary" {
 		defaultTpl = gcAjaxTpl
 	}
-	writeTemplate(rw, data, profillingTpl, defaultTpl)
+	execTpl(rw, data, profillingTpl, defaultTpl)
 }
 
 // Healthcheck is a http.Handler calling health checking and showing the result.
 // it's in "/healthcheck" pattern in admin module.
-func healthcheck(rw http.ResponseWriter, r *http.Request) {
+func healthcheck(rw http.ResponseWriter, _ *http.Request) {
 	var (
 		result     []string
 		data       = make(map[interface{}]interface{})
@@ -308,62 +304,23 @@ func healthcheck(rw http.ResponseWriter, r *http.Request) {
 		if err := h.Check(); err != nil {
 			result = []string{
 				"error",
-				template.HTMLEscapeString(name),
-				template.HTMLEscapeString(err.Error()),
+				name,
+				err.Error(),
 			}
 		} else {
 			result = []string{
 				"success",
-				template.HTMLEscapeString(name),
+				name,
 				"OK",
 			}
 		}
 		*resultList = append(*resultList, result)
 	}
 
-	queryParams := r.URL.Query()
-	jsonFlag := queryParams.Get("json")
-	shouldReturnJSON, _ := strconv.ParseBool(jsonFlag)
-
-	if shouldReturnJSON {
-		response := buildHealthCheckResponseList(resultList)
-		jsonResponse, err := json.Marshal(response)
-
-		if err != nil {
-			http.Error(rw, err.Error(), http.StatusInternalServerError)
-		} else {
-			writeJSON(rw, jsonResponse)
-		}
-		return
-	}
-
 	content["Data"] = resultList
 	data["Content"] = content
 	data["Title"] = "Health Check"
-
-	writeTemplate(rw, data, healthCheckTpl, defaultScriptsTpl)
-}
-
-func buildHealthCheckResponseList(healthCheckResults *[][]string) []map[string]interface{} {
-	response := make([]map[string]interface{}, len(*healthCheckResults))
-
-	for i, healthCheckResult := range *healthCheckResults {
-		currentResultMap := make(map[string]interface{})
-
-		currentResultMap["name"] = healthCheckResult[0]
-		currentResultMap["message"] = healthCheckResult[1]
-		currentResultMap["status"] = healthCheckResult[2]
-
-		response[i] = currentResultMap
-	}
-
-	return response
-
-}
-
-func writeJSON(rw http.ResponseWriter, jsonData []byte) {
-	rw.Header().Set("Content-Type", "application/json")
-	rw.Write(jsonData)
+	execTpl(rw, data, healthCheckTpl, defaultScriptsTpl)
 }
 
 // TaskStatus is a http.Handler with running task status (task name, status and the last execution).
@@ -377,11 +334,11 @@ func taskStatus(rw http.ResponseWriter, req *http.Request) {
 	if taskname != "" {
 		if t, ok := toolbox.AdminTaskList[taskname]; ok {
 			if err := t.Run(); err != nil {
-				data["Message"] = []string{"error", template.HTMLEscapeString(fmt.Sprintf("%s", err))}
+				data["Message"] = []string{"error", fmt.Sprintf("%s", err)}
 			}
-			data["Message"] = []string{"success", template.HTMLEscapeString(fmt.Sprintf("%s run success,Now the Status is <br>%s", taskname, t.GetStatus()))}
+			data["Message"] = []string{"success", fmt.Sprintf("%s run success,Now the Status is <br>%s", taskname, t.GetStatus())}
 		} else {
-			data["Message"] = []string{"warning", template.HTMLEscapeString(fmt.Sprintf("there's no task which named: %s", taskname))}
+			data["Message"] = []string{"warning", fmt.Sprintf("there's no task which named: %s", taskname)}
 		}
 	}
 
@@ -397,10 +354,10 @@ func taskStatus(rw http.ResponseWriter, req *http.Request) {
 	}
 	for tname, tk := range toolbox.AdminTaskList {
 		result := []string{
-			template.HTMLEscapeString(tname),
-			template.HTMLEscapeString(tk.GetSpec()),
-			template.HTMLEscapeString(tk.GetStatus()),
-			template.HTMLEscapeString(tk.GetPrev().String()),
+			tname,
+			tk.GetSpec(),
+			tk.GetStatus(),
+			tk.GetPrev().String(),
 		}
 		*resultList = append(*resultList, result)
 	}
@@ -409,10 +366,10 @@ func taskStatus(rw http.ResponseWriter, req *http.Request) {
 	content["Data"] = resultList
 	data["Content"] = content
 	data["Title"] = "Tasks"
-	writeTemplate(rw, data, tasksTpl, defaultScriptsTpl)
+	execTpl(rw, data, tasksTpl, defaultScriptsTpl)
 }
 
-func writeTemplate(rw http.ResponseWriter, data map[interface{}]interface{}, tpls ...string) {
+func execTpl(rw http.ResponseWriter, data map[interface{}]interface{}, tpls ...string) {
 	tmpl := template.Must(template.New("dashboard").Parse(dashboardTpl))
 	for _, tpl := range tpls {
 		tmpl = template.Must(tmpl.Parse(tpl))

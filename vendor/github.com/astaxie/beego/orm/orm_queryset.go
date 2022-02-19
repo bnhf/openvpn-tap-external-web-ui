@@ -32,11 +32,6 @@ const (
 	ColMinus
 	ColMultiply
 	ColExcept
-	ColBitAnd
-	ColBitRShift
-	ColBitLShift
-	ColBitXOR
-	ColBitOr
 )
 
 // ColValue do the field raw changes. e.g Nums = Nums + 10. usage:
@@ -45,8 +40,7 @@ const (
 // 	}
 func ColValue(opt operator, value interface{}) interface{} {
 	switch opt {
-	case ColAdd, ColMinus, ColMultiply, ColExcept, ColBitAnd, ColBitRShift,
-		ColBitLShift, ColBitXOR, ColBitOr:
+	case ColAdd, ColMinus, ColMultiply, ColExcept:
 	default:
 		panic(fmt.Errorf("orm.ColValue wrong operator"))
 	}

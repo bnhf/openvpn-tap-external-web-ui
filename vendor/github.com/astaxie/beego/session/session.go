@@ -92,21 +92,20 @@ func GetProvider(name string) (Provider, error) {
 
 // ManagerConfig define the session config
 type ManagerConfig struct {
-	CookieName              string        `json:"cookieName"`
-	EnableSetCookie         bool          `json:"enableSetCookie,omitempty"`
-	Gclifetime              int64         `json:"gclifetime"`
-	Maxlifetime             int64         `json:"maxLifetime"`
-	DisableHTTPOnly         bool          `json:"disableHTTPOnly"`
-	Secure                  bool          `json:"secure"`
-	CookieLifeTime          int           `json:"cookieLifeTime"`
-	ProviderConfig          string        `json:"providerConfig"`
-	Domain                  string        `json:"domain"`
-	SessionIDLength         int64         `json:"sessionIDLength"`
-	EnableSidInHTTPHeader   bool          `json:"EnableSidInHTTPHeader"`
-	SessionNameInHTTPHeader string        `json:"SessionNameInHTTPHeader"`
-	EnableSidInURLQuery     bool          `json:"EnableSidInURLQuery"`
-	SessionIDPrefix         string        `json:"sessionIDPrefix"`
-	CookieSameSite          http.SameSite `json:"cookieSameSite"`
+	CookieName              string `json:"cookieName"`
+	EnableSetCookie         bool   `json:"enableSetCookie,omitempty"`
+	Gclifetime              int64  `json:"gclifetime"`
+	Maxlifetime             int64  `json:"maxLifetime"`
+	DisableHTTPOnly         bool   `json:"disableHTTPOnly"`
+	Secure                  bool   `json:"secure"`
+	CookieLifeTime          int    `json:"cookieLifeTime"`
+	ProviderConfig          string `json:"providerConfig"`
+	Domain                  string `json:"domain"`
+	SessionIDLength         int64  `json:"sessionIDLength"`
+	EnableSidInHTTPHeader   bool   `json:"EnableSidInHTTPHeader"`
+	SessionNameInHTTPHeader string `json:"SessionNameInHTTPHeader"`
+	EnableSidInURLQuery     bool   `json:"EnableSidInURLQuery"`
+	SessionIDPrefix         string `json:"sessionIDPrefix"`
 }
 
 // Manager contains Provider and its configuration.
@@ -233,7 +232,6 @@ func (manager *Manager) SessionStart(w http.ResponseWriter, r *http.Request) (se
 		HttpOnly: !manager.config.DisableHTTPOnly,
 		Secure:   manager.isSecure(r),
 		Domain:   manager.config.Domain,
-		SameSite: manager.config.CookieSameSite,
 	}
 	if manager.config.CookieLifeTime > 0 {
 		cookie.MaxAge = manager.config.CookieLifeTime
@@ -272,10 +270,7 @@ func (manager *Manager) SessionDestroy(w http.ResponseWriter, r *http.Request) {
 			Path:     "/",
 			HttpOnly: !manager.config.DisableHTTPOnly,
 			Expires:  expiration,
-			MaxAge:   -1,
-			Domain:   manager.config.Domain,
-			SameSite: manager.config.CookieSameSite,
-		}
+			MaxAge:   -1}
 
 		http.SetCookie(w, cookie)
 	}
@@ -310,7 +305,6 @@ func (manager *Manager) SessionRegenerateID(w http.ResponseWriter, r *http.Reque
 			HttpOnly: !manager.config.DisableHTTPOnly,
 			Secure:   manager.isSecure(r),
 			Domain:   manager.config.Domain,
-			SameSite: manager.config.CookieSameSite,
 		}
 	} else {
 		oldsid, _ := url.QueryUnescape(cookie.Value)
