@@ -13,6 +13,7 @@ VARS=/etc/openvpn/easy-rsa/vars
 cp -f /opt/scripts/vars.template /etc/openvpn/easy-rsa/vars
 
 # Append the env variables passed by Docker to the vars file
+echo -e "\n"
 echo "set_var EASYRSA_REQ_COUNTRY   \"$COUNTRY\""  >> $VARS
 echo "set_var EASYRSA_REQ_PROVINCE  \"$PROVINCE\"" >> $VARS
 echo "set_var EASYRSA_REQ_CITY      \"$CITY\""     >> $VARS
