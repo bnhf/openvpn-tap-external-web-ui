@@ -159,6 +159,7 @@ func saveClientConfig(name string) (string, error) {
 	cfg.Key = name + ".key"
 	serverConfig := models.OVConfig{Profile: "default"}
 	serverConfig.Read("Profile")
+	cfg.Dev = serverConfig.Dev
 	cfg.Port = serverConfig.Port
 	cfg.Proto = serverConfig.Proto
 	cfg.Auth = serverConfig.Auth
@@ -184,6 +185,7 @@ func saveClientSingleConfig(name string, pathString string) (string, error) {
 	cfg.Ca = readCert(pathString + "../easy-rsa/pki/" + "ca.crt")
 	serverConfig := models.OVConfig{Profile: "default"}
 	serverConfig.Read("Profile")
+	cfg.Dev = serverConfig.Dev
 	cfg.Port = serverConfig.Port
 	cfg.Proto = serverConfig.Proto
 	cfg.Auth = serverConfig.Auth
