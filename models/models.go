@@ -113,7 +113,7 @@ func createDefaultOVConfig() {
 			Ca:                  "easy-rsa/pki/ca.crt",
 			Cert:                "easy-rsa/pki/issued/server.crt",
 			Key:                 "easy-rsa/pki/private/server.key",
-			ExtraServerOptions:  "# push \"block-outside-dns\"\n# client-config-dir /etc/openvpn/ccd",
+			ExtraServerOptions:  "# client-config-dir /etc/openvpn/ccd",
 			ExtraClientOptions:  "",
 		},
 	}
