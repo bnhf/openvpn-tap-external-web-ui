@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/astaxie/beego v1.12.0
-	github.com/bnhf/go-openvpn v0.0.0-20220218212450-9249293b82b4
+	github.com/bnhf/go-openvpn v0.0.0-20220224194618-7df23686c0df
 	github.com/cloudfoundry/gosigar v1.2.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	gopkg.in/hlandau/passlib.v1 v1.0.11

@@ -7,22 +7,25 @@ import (
 )
 
 var defaultConfig = Config{
+	Dev:                 "tap0",
 	Port:                1194,
 	Proto:               "udp",
 	DNSServerOne:        "8.8.8.8",
 	DNSServerTwo:        "8.8.4.4",
+	Server:              "server-bridge 192.168.1.250 255.255.255.0 192.168.1.2 192.168.1.5",
 	Cipher:              "AES-256-CBC",
 	Keysize:             256,
 	Auth:                "SHA256",
 	Dh:                  "dh2048.pem",
 	Keepalive:           "10 120",
 	IfconfigPoolPersist: "ipp.txt",
-	ExtraServerOptions:  "",
+	ExtraServerOptions:  "# Uncomment or add any lines you'd like to use\n# push \"block-outside-dns\"\n# client-config-dir /etc/openvpn/ccd",
 	ExtraClientOptions:  "",
 }
 
 //Config model
 type Config struct {
+	Dev   string
 	Port  int
 	Proto string
 

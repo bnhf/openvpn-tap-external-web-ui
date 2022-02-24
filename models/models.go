@@ -96,6 +96,7 @@ func createDefaultOVConfig() {
 	c := OVConfig{
 		Profile: "default",
 		Config: config.Config{
+			Dev:                 "tap0",
 			Port:                1194,
 			Proto:               "udp",
 			DNSServerOne:        "8.8.8.8",
@@ -108,11 +109,11 @@ func createDefaultOVConfig() {
 			IfconfigPoolPersist: "ipp.txt",
 			Management:          "0.0.0.0 2080",
 			MaxClients:          100,
-			Server:              "192.168.1.100 255.255.255.0 192.168.1.2 192.168.1.8",
+			Server:              "server-bridge 192.168.1.100 255.255.255.0 192.168.1.2 192.168.1.8",
 			Ca:                  "easy-rsa/pki/ca.crt",
 			Cert:                "easy-rsa/pki/issued/server.crt",
 			Key:                 "easy-rsa/pki/private/server.key",
-			ExtraServerOptions:  "",
+			ExtraServerOptions:  "# push \"block-outside-dns\"\n# client-config-dir /etc/openvpn/ccd",
 			ExtraClientOptions:  "",
 		},
 	}
