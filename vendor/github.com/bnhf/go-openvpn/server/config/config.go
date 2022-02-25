@@ -19,7 +19,8 @@ var defaultConfig = Config{
 	Dh:                  "dh2048.pem",
 	Keepalive:           "10 120",
 	IfconfigPoolPersist: "ipp.txt",
-	ExtraServerOptions:  "# Uncomment or add any lines you'd like to use\n# push \"block-outside-dns\"\n# client-config-dir /etc/openvpn/ccd",
+	CCEncryption:        "/etc/openvpn/easy-rsa/pki/ta.key",
+	ExtraServerOptions:  "# client-config-dir /etc/openvpn/ccd",
 	ExtraClientOptions:  "",
 }
 
@@ -43,7 +44,8 @@ type Config struct {
 	Server              string
 	IfconfigPoolPersist string
 	Keepalive           string
-	MaxClients          int
+	//	MaxClients          int
+	CCEncryption string
 
 	ExtraServerOptions string
 	ExtraClientOptions string

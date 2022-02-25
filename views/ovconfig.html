@@ -108,7 +108,7 @@
         <input type="text" class="form-control" name="Server" id="Server" placeholder=""
           value="{{ .Settings.Server }}">
         <span id="helpBlock" class="help-block">Specify server-bridge or server mode and supply an IP range
-            for OpenVPN to draw client addresses from.</span>
+            for OpenVPN to draw client addresses from</span>
       </div>
 
       <div class="form-group">
@@ -137,32 +137,33 @@
       </div>
 
       <div class="form-group">
-        <label for="name">MaxClients</label>
-        <input type="text" class="form-control" name="MaxClients" id="MaxClients" placeholder=""
-          value="{{ .Settings.MaxClients }}">
-        <span id="helpBlock" class="help-block">The maximum number of concurrently connected
-            clients we want to allow.</span>
+        <label for="name">Contol Channel Encryption</label>
+        <input type="text" class="form-control" name="CCEncryption" id="CCEncryption" placeholder=""
+          value="{{ .Settings.CCEncryption }}">
+        <span id="helpBlock" class="help-block">Path for the key used
+            to encrypt the TLS Control Channel</span>
       </div>
 
       <div class="form-group">
         <label for="name">ExtraServerOptions</label>
         <textarea type="text" class="form-control" name="ExtraServerOptions" 
           id="ExtraServerOptions">{{ .Settings.ExtraServerOptions }}</textarea>
-        <span id="helpBlock" class="help-block">Extra server options to add to the config.</span>
+        <span id="helpBlock" class="help-block">Extra server options to add to the config</span>
       </div>
 
       <div class="form-group">
         <label for="name">ExtraClientOptions</label>
         <textarea type="text" class="form-control" name="ExtraClientOptions" 
           id="ExtraClientOptions">{{ .Settings.ExtraClientOptions }}</textarea>
-        <span id="helpBlock" class="help-block">Extra client options to add to the generated client configs.</span>
+        <span id="helpBlock" class="help-block">Extra client options to add to the generated client configs</span>
       </div>
 
       <div class="form-group">
         <label for="name">Management</label>
         <input type="text" class="form-control" name="Management" id="Management" placeholder=""
           value="{{ .Settings.Management }}">
-        <span id="helpBlock" class="help-block"></span>
+        <span id="helpBlock" class="help-block">IP address and port number for
+            the OpenVPN Management Interface</span>
       </div>
 
       {{ .xsrfdata }}
