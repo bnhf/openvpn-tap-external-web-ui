@@ -64,11 +64,9 @@ Setup your Portainer Stacks page as shown on an amd64 machine running Debian or 
 
 ![Status page](docs/images/screenshot-brix-pc2_9443-2022.02.03-15_35_24.png?raw=true)
 
-Setup your Portainer Stacks page as shown on an ARMv7 running the Raspberry Pi OS, inserting environment variables for creating certificates:
+Setup your Portainer Stacks page as shown on an ARMv7 running the Raspberry Pi OS, inserting environment variables for creating certificates (grab the contents of the docker-compose.yml in the docs folder, and add a :armv7 as a tag after the container name:
 
 ![screenshot-raspberrypi5_9000-2022 02 26-13_16_57](https://user-images.githubusercontent.com/41088895/155858516-edbcbc07-331a-4719-ab41-501d7c99934c.png)
-
-
 
 This fork uses a single docker container with the OpenVPNAdmin web application. Through a docker volume it creates following directory structure for the database, but otherwise links to /etc/openvpn in the host. The intention is for PiVPN to be able to operate as usual, with PiVPN commanline options still available:
 
@@ -103,12 +101,18 @@ Execute commands:
     cd build
     ./build.sh
     
+For building on ARMv7:
+
+    In the dockerfile inside the build folder, comment out debian:bullseye as a source , and uncomment balenalib/raspberry-pi-debian:latest
+    In build.sh, change the docker build to <your-docker-hub-repo-here>/openvpn-tap-external-web-ui:armv7
+    It's highly recommended that you use Visual Studio Code with the "Remote - SSH" extension (in addition to the "Go" extension of course) from a more powerful machine
+    
 
 ## Todo
 
 * ARMv7 version for the Raspberry Pi -- Done!
 * Update "Memory usage" on the status page to display more accurate data
-* Add certificate revocation from the GUI -- currently can be done only from the commandline
+* Add certificate revocation from the GUI -- currently can be done only from the commandline via PiVPN -r username
 
 
 ## License
