@@ -63,7 +63,7 @@ Requirements:
 
 Setup your Portainer Stacks page as shown on an amd64 machine running Debian or Ubuntu, inserting environment variables for creating certificates:
 
-![Status page](docs/images/screenshot-brix-pc2_9443-2022.02.03-15_35_24.png?raw=true)
+![screenshot-brix-pc2_9443-2022 02 03-15_35_24](https://user-images.githubusercontent.com/41088895/155859576-5a494d53-c943-40e6-ba6c-e18d18396164.png)
 
 Setup your Portainer Stacks page as shown on an ARMv7 running the Raspberry Pi OS, inserting environment variables for creating certificates (grab the contents of the docker-compose.yml in the docs folder, and add a :armv7 as a tag after the container name:
 
