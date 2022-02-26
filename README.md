@@ -11,7 +11,7 @@ Goal: create quick to deploy and easy to use solution that makes work with small
 
 If you have docker and Portainer installed, you can jump directly to [installation](#Prod).
 
-![Status page](docs/images/Screenshot 2022-02-26 113256.png)
+![Status page](docs/images/Screenshot 2022-02-26 113256.png?raw=true)
 
 If you have a functioning OpenVPN TAP or TUN Server on the same host as your Docker containers, you should be able
 to use this fork to monitor OpenVPN connections.
