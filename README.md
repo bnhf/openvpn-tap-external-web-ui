@@ -1,7 +1,7 @@
 # OpenVPN-TAP-external-web-ui
 
 ## Summary
-OpenVPN TAP (bridge) external server (non-Docker) web administration interface. Intended for use with PiVPN (on amd64 versions of Debian or Ubuntu). PiVPN should be installed first!
+OpenVPN TAP (bridge) external server (non-Docker) web administration interface. Intended for use with PiVPN (on amd64 versions of Debian or Ubuntu, or on ARMv7 with Raspberry Pi OS). PiVPN should be installed first!  Recently adapted to work with host-installed TUN servers too.
 
 Here's a post on setting PiVPN in TAP server mode. It's written for the Raspberry Pi, but the steps are the same on Debian or Ubuntu. One exception is your physical ethernet adapter, which will likely not be eth0 in the openvpn-bridge script:
 
@@ -13,14 +13,14 @@ If you have docker and Portainer installed, you can jump directly to [installati
 
 ![Status page](docs/images/screenshot-brix-pc2_8080-2022.02.03-16_09_24.png?raw=true)
 
-If you have a functioning OpenVPN TAP Server on the same host as your Docker containers, you should be able
+If you have a functioning OpenVPN TAP or TUN Server on the same host as your Docker containers, you should be able
 to use this fork to monitor OpenVPN connections.
 
 Certificate generation and management is also available, and should be compatible with PiVPN. You can use either this web-ui to create client certificates, or use PiVPN from the commandline. Use PiVPN from the commandline (with elevated priveleges) to revoke certificates.
 
 ## Motivation
 
-* to create a version of this project that will work with OpenVPN TAP servers created using PiVPN (amd64 only)
+* to create a version of this project that will work with OpenVPN TAP and TUN servers created using PiVPN (amd64 or ARMv7 only)
 
 ## Features
 
@@ -29,7 +29,8 @@ Certificate generation and management is also available, and should be compatibl
 * ability to download client certificates as a zip package with client configuration inside or as a single .ovpn file
 * log preview
 * modification of OpenVPN configuration file through web interface
-* this fork is designed to use an external version of OpenVPN configured for TAP (bridge) -- which is probably not possible via Docker
+* this fork is especially designed to use an external version of OpenVPN configured for TAP (bridge) -- which is probably not possible via Docker
+* works with host-base PiVPN TUN servers now too!
 
 ## Screenshots
 
@@ -80,7 +81,7 @@ Optional, but recommended:
 
 Execute commands:
 
-    go get -u github.com/bnhf/openvpn-tap-external-web-ui
+    go get github.com/bnhf/openvpn-tap-external-web-ui
     cd $GOPATH/src/github.com/bnhf/openvpn-tap-external-web-ui
     go mod tidy
     bee run -gendoc=true
@@ -91,8 +92,9 @@ Execute commands:
 
 ## Todo
 
-* arm64 version for the Raspberry Pi
-* Update "Memory usage" on the status page to display data from the host, rather than the container
+* ARMv7 version for the Raspberry Pi -- Done!
+* Update "Memory usage" on the status page to display more accurate data
+* Add certificate revocation from the GUI -- currently can be done only from the commandline
 
 
 ## License
@@ -104,7 +106,7 @@ This project uses [MIT license](LICENSE)
 
 Numerous things have been updated to bring this project forward from its 2017 roots. It's now based on Debian 11 (in the container build), and is using the latest OpenVPN and EasyRSA, thanks to PiVPN. All of the project dependencies (vendoring) have been updated to current levels in 2022.
 
-Courtsey of @tyzbit, the ability to specify DNS servers, and additional client/server options have been added. Also @mendoza-conicet contributed code for being able to download a single .ovpn file.
+Courtsey of @tyzbit, the ability to specify DNS servers, and additional client/server options have been added. Also @mendoza-conicet contributed code for being able to download a single .ovpn file. Many issues have been addressed related to adapting this package for use with a host-based server, and related to all of the latest versions of the dependencies,
 
 And, of course, many thanks to @adamwalach for his excellent original work to create this project!
 
