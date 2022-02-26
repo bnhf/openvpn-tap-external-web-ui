@@ -1,26 +1,32 @@
-dev tap
+{{ .ExtraClientOptions }}
+client
+proto {{ .Proto }}
+remote {{ .ServerAddress }} {{ .Port }}
+resolv-retry infinite
+nobind
+
+remote-cert-tls server
+tls-version-min 1.2
+verify-x509-name {{ .PiVPNServer }} name
 persist-tun
 persist-key
-client
-resolv-retry infinite
-remote {{ .ServerAddress }} {{ .Port }} {{ .Proto }}
-lport 0
 
 cipher {{ .Cipher }}
-keysize {{ .Keysize }}
 auth {{ .Auth }}
-tls-client
+auth-nocache
+# tls-client
 
 <ca>
 {{ .Ca }}
 </ca>
-
 <cert>
 {{ .Cert }}
 </cert>
-
 <key>
 {{ .Key }}
 </key>
+<tls-crypt>
+{{ .Ta }}
+</tls-crypt>
 
-comp-lzo
+# comp-lzo

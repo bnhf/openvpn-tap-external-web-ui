@@ -83,13 +83,6 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Keysize</label>
-        <input type="text" class="form-control" name="Keysize" id="Keysize" placeholder=""
-          value="{{ .Settings.Keysize }}">
-        <span id="helpBlock" class="help-block"></span>
-      </div>
-
-      <div class="form-group">
         <label for="name">Auth</label>
         <input type="text" class="form-control" name="Auth" id="Auth" placeholder=""
           value="{{ .Settings.Auth }}">
@@ -137,7 +130,7 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Contol Channel Encryption</label>
+        <label for="name">Control Channel Encryption</label>
         <input type="text" class="form-control" name="CCEncryption" id="CCEncryption" placeholder=""
           value="{{ .Settings.CCEncryption }}">
         <span id="helpBlock" class="help-block">Path for the key used
@@ -145,17 +138,31 @@
       </div>
 
       <div class="form-group">
-        <label for="name">ExtraServerOptions</label>
+        <label for="name">Extra Server Options</label>
         <textarea type="text" class="form-control" name="ExtraServerOptions" 
           id="ExtraServerOptions">{{ .Settings.ExtraServerOptions }}</textarea>
-        <span id="helpBlock" class="help-block">Extra server options to add to the config</span>
+        <span id="helpBlock" class="help-block">Extra server options to add to the config. 
+          # indicates option will not be used. push block-outside DNS and push redirect-gateway
+          should not be used in a bridge setup.
+        </span>
       </div>
 
       <div class="form-group">
-        <label for="name">ExtraClientOptions</label>
+        <label for="name">Extra Client Options</label>
         <textarea type="text" class="form-control" name="ExtraClientOptions" 
           id="ExtraClientOptions">{{ .Settings.ExtraClientOptions }}</textarea>
-        <span id="helpBlock" class="help-block">Extra client options to add to the generated client configs</span>
+        <span id="helpBlock" class="help-block">Extra client options to add to the generated client configs.
+            # indicates option will not be used. Either dev tun (tunnel) or dev tap (bridge) must be enabled!
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="name">PiVPN OpenVPN Server Name</label>
+        <input type="text" class="form-control" name="PiVPNServer" id="PiVPNServer" placeholder=""
+          value="{{ .Settings.PiVPNServer }}">
+        <span id="helpBlock" class="help-block">Unique name assigned by PiVPN for the 
+            server certificate and key
+        </span>
       </div>
 
       <div class="form-group">

@@ -11,7 +11,7 @@ github.com/astaxie/beego/session
 github.com/astaxie/beego/toolbox
 github.com/astaxie/beego/utils
 github.com/astaxie/beego/validation
-# github.com/bnhf/go-openvpn v0.0.0-20220225162306-9265505df506
+# github.com/bnhf/go-openvpn v0.0.0-20220226142348-d36953e77c71
 ## explicit
 github.com/bnhf/go-openvpn/client/config
 github.com/bnhf/go-openvpn/server/config

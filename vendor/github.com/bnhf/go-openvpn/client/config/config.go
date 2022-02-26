@@ -28,11 +28,13 @@ type Config struct {
 	Ca   string
 	Cert string
 	Key  string
+	Ta   string
 
 	Cipher             string
 	Keysize            int
 	Auth               string
 	ExtraClientOptions string
+	PiVPNServer        string
 }
 
 //New returns config object with default values

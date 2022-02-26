@@ -20,14 +20,16 @@ remote-cert-tls client
 tls-version-min 1.2
 tls-crypt {{ .CCEncryption }}
 cipher {{ .Cipher }}
-keysize {{ .Keysize }}
 auth {{ .Auth }}
 
-comp-lzo
-max-clients {{ .MaxClients }}
+# comp-lzo
 persist-key
 persist-tun
+crl-verify /etc/openvpn/crl.pem
 
+# status /etc/openvpn/openvpn-status.log 20
+# status-version 3
+# syslog
 log /etc/openvpn/openvpn.log
 verb 3
 mute 10

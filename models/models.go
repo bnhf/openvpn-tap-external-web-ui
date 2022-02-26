@@ -101,8 +101,7 @@ func createDefaultOVConfig() {
 			Proto:               "udp",
 			DNSServerOne:        "8.8.8.8",
 			DNSServerTwo:        "8.8.4.4",
-			Cipher:              "AES-256-CBC",
-			Keysize:             256,
+			Cipher:              "AES-256-GCM",
 			Auth:                "SHA256",
 			Dh:                  "dh2048.pem",
 			Keepalive:           "10 120",
@@ -113,8 +112,9 @@ func createDefaultOVConfig() {
 			Ca:                  "easy-rsa/pki/ca.crt",
 			Cert:                "easy-rsa/pki/issued/" + os.Getenv("PIVPN_SERVER") + ".crt",
 			Key:                 "easy-rsa/pki/private/" + os.Getenv("PIVPN_SERVER") + ".key",
-			ExtraServerOptions:  "push \"route 0.0.0.0 255.255.255.255 net_gateway\"\nclient-to-client\n# push block-outside-dns\n# push \"redirect-gateway def1\"\n# client-config-dir /etc/openvpn/ccd\n# duplicate-cn",
-			ExtraClientOptions:  "",
+			ExtraServerOptions:  "push \"route 0.0.0.0 255.255.255.255 net_gateway\"\nclient-to-client\n# push block-outside-dns\n# push \"redirect-gateway def1\"\n# client-config-dir /etc/openvpn/ccd\n# duplicate-cn\nmax-clients 100\n",
+			ExtraClientOptions:  "dev tap\n# dev tun\n# lport 0",
+			PiVPNServer:         os.Getenv("PIVPN_SERVER"),
 		},
 	}
 	o := orm.NewOrm()
