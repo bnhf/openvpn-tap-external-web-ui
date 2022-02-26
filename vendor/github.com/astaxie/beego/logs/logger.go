@@ -30,12 +30,11 @@ func newLogWriter(wr io.Writer) *logWriter {
 	return &logWriter{writer: wr}
 }
 
-func (lg *logWriter) writeln(when time.Time, msg string) (int, error) {
+func (lg *logWriter) writeln(when time.Time, msg string) {
 	lg.Lock()
 	h, _, _ := formatTimeHeader(when)
-	n, err := lg.writer.Write(append(append(h, msg...), '\n'))
+	lg.writer.Write(append(append(h, msg...), '\n'))
 	lg.Unlock()
-	return n, err
 }
 
 const (

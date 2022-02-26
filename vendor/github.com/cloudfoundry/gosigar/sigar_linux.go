@@ -100,14 +100,6 @@ func (self *Uptime) Get() error {
 }
 
 func (self *Mem) Get() error {
-	return self.get(false)
-}
-
-func (self *Mem) GetIgnoringCGroups() error {
-	return self.get(true)
-}
-
-func (self *Mem) get(ignoreCGroups bool) error {
 	var available uint64 = MaxUint64
 	var buffers, cached uint64
 	table := map[string]*uint64{
@@ -130,10 +122,6 @@ func (self *Mem) get(ignoreCGroups bool) error {
 
 	self.Used = self.Total - self.Free
 	self.ActualUsed = self.Total - self.ActualFree
-
-	if ignoreCGroups {
-		return nil
-	}
 
 	// Instead of detecting if this code is run within a container
 	// or not (*), we simply attempt to retrieve the cgroup
@@ -663,7 +651,7 @@ func determineControllerMounts(sysd1, sysd2 *string) {
 
 		if mtype == "cgroup2" {
 			if *sysd2 != "" {
-				return true
+				panic("Multiple cgroup v2 mount points")
 			}
 			*sysd2 = mpath
 			return true
@@ -672,7 +660,7 @@ func determineControllerMounts(sysd1, sysd2 *string) {
 			options := strings.Split(moptions, ",")
 			if stringSliceContains(options, "memory") {
 				if *sysd1 != "" {
-					return true
+					panic("Multiple cgroup v1 mount points")
 				}
 				*sysd1 = mpath
 				return true

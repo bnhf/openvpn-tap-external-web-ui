@@ -66,6 +66,7 @@ func (c *CertificatesController) Download() {
 	addFileToZip(zw, keysPath+"ca.crt")
 	addFileToZip(zw, keysPath+"issued/"+name+".crt")
 	addFileToZip(zw, keysPath+"private/"+name+".key")
+	addFileToZip(zw, keysPath+"ta.key")
 
 	if err := zw.Close(); err != nil {
 		beego.Error(err)
@@ -157,14 +158,17 @@ func saveClientConfig(name string) (string, error) {
 	cfg.ServerAddress = models.GlobalCfg.ServerAddress
 	cfg.Cert = name + ".crt"
 	cfg.Key = name + ".key"
+	cfg.Ta = "ta.key"
 	serverConfig := models.OVConfig{Profile: "default"}
 	serverConfig.Read("Profile")
+	cfg.Dev = serverConfig.Dev
 	cfg.Port = serverConfig.Port
 	cfg.Proto = serverConfig.Proto
 	cfg.Auth = serverConfig.Auth
 	cfg.Cipher = serverConfig.Cipher
 	cfg.Keysize = serverConfig.Keysize
 	cfg.ExtraClientOptions = serverConfig.ExtraClientOptions
+	cfg.PiVPNServer = serverConfig.PiVPNServer
 
 	destPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/" + name + ".conf"
 	if err := config.SaveToFile("conf/openvpn-client-config.tpl",
@@ -182,13 +186,16 @@ func saveClientSingleConfig(name string, pathString string) (string, error) {
 	cfg.Cert = readCert(pathString + "../easy-rsa/pki/issued/" + name + ".crt")
 	cfg.Key = readCert(pathString + "../easy-rsa/pki/private/" + name + ".key")
 	cfg.Ca = readCert(pathString + "../easy-rsa/pki/" + "ca.crt")
+	cfg.Ta = readCert(pathString + "../easy-rsa/pki/" + "ta.key")
 	serverConfig := models.OVConfig{Profile: "default"}
 	serverConfig.Read("Profile")
+	cfg.ExtraClientOptions = serverConfig.ExtraClientOptions
 	cfg.Port = serverConfig.Port
 	cfg.Proto = serverConfig.Proto
 	cfg.Auth = serverConfig.Auth
 	cfg.Cipher = serverConfig.Cipher
 	cfg.Keysize = serverConfig.Keysize
+	cfg.PiVPNServer = serverConfig.PiVPNServer
 
 	destPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/" + name + ".ovpn"
 	if err := config.SaveToFile("conf/openvpn-client-config.ovpn.tpl",

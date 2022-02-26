@@ -295,11 +295,7 @@ func (bl *BeeLogger) writeMsg(logLevel int, msg string, v ...interface{}) error 
 		lm.level = logLevel
 		lm.msg = msg
 		lm.when = when
-		if bl.outputs != nil {
-			bl.msgChan <- lm
-		} else {
-			logMsgPool.Put(lm)
-		}
+		bl.msgChan <- lm
 	} else {
 		bl.writeToLoggers(when, msg, logLevel)
 	}

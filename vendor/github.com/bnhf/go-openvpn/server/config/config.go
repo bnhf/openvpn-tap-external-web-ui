@@ -1,28 +1,34 @@
 package config
 
+// html/template changed to text/template
 import (
 	"bytes"
-	"html/template"
 	"io/ioutil"
+	"text/template"
 )
 
+// Don't think these defaults are ever used -- see models/models.go
 var defaultConfig = Config{
+	Dev:                 "tap0",
 	Port:                1194,
 	Proto:               "udp",
 	DNSServerOne:        "8.8.8.8",
 	DNSServerTwo:        "8.8.4.4",
+	Server:              "server-bridge 192.168.1.250 255.255.255.0 192.168.1.2 192.168.1.5",
 	Cipher:              "AES-256-CBC",
 	Keysize:             256,
 	Auth:                "SHA256",
 	Dh:                  "dh2048.pem",
 	Keepalive:           "10 120",
 	IfconfigPoolPersist: "ipp.txt",
-	ExtraServerOptions:  "",
+	CCEncryption:        "/etc/openvpn/easy-rsa/pki/ta.key",
+	ExtraServerOptions:  "# client-config-dir /etc/openvpn/ccd",
 	ExtraClientOptions:  "",
 }
 
 //Config model
 type Config struct {
+	Dev   string
 	Port  int
 	Proto string
 
@@ -40,12 +46,14 @@ type Config struct {
 	Server              string
 	IfconfigPoolPersist string
 	Keepalive           string
-	MaxClients          int
+	CCEncryption        string
 
 	ExtraServerOptions string
 	ExtraClientOptions string
 
 	Management string
+
+	PiVPNServer string
 }
 
 //New returns config object with default values

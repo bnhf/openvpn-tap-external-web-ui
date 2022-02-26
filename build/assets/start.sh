@@ -13,6 +13,9 @@ if [ ! -f $OVDIR/.provisioned ]; then
   touch $OVDIR/.provisioned
 fi
 
+export PIVPN_SERVER=$(awk -F= '/server/ {print $2}' \
+                    /etc/openvpn/easy-rsa/pki/index.txt \
+                    | awk -F/ '{print $1}')
 cd /opt/openvpn-gui
 mkdir -p db
 ./openvpn-tap-external-web-ui

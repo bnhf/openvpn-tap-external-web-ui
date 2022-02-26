@@ -6,7 +6,8 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/bnhf/go-openvpn/server/config"
-	mi "github.com/bnhf/go-openvpn/server/mi"
+
+	//	mi "github.com/bnhf/go-openvpn/server/mi"
 	"github.com/bnhf/openvpn-tap-external-web-ui/lib"
 	"github.com/bnhf/openvpn-tap-external-web-ui/models"
 )
@@ -57,13 +58,16 @@ func (c *OVConfigController) Post() {
 		return
 	}
 
+	// Attempts to restart OpenVPN service after config update
+	// below caused issues in bridged (TAP) setups
 	o := orm.NewOrm()
 	if _, err := o.Update(&cfg); err != nil {
 		flash.Error(err.Error())
 	} else {
-		flash.Success("Config has been updated")
-		client := mi.NewClient(models.GlobalCfg.MINetwork, models.GlobalCfg.MIAddress)
-		if err := client.Signal("SIGTERM"); err != nil {
+		flash.Success("Config has been updated -- reboot required for changes to take effect!")
+		//		client := mi.NewClient(models.GlobalCfg.MINetwork, models.GlobalCfg.MIAddress)
+		//		if err := client.Signal("SIGTERM"); err != nil {
+		if err != nil { //Above two lines causing MI to stop responding
 			flash.Warning("Config has been updated but OpenVPN server was NOT reloaded: " + err.Error())
 		}
 	}

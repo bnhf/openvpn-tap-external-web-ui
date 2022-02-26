@@ -21,6 +21,13 @@
       </div>
 
       <div class="form-group">
+        <label for="name">Dev</label>
+        <input type="text" class="form-control" name="Dev" id="Dev" placeholder=""
+          value="{{ .Settings.Dev }}">
+        <span class="help-block">Which tunnel or bridge should OpenVPN use</span>
+      </div>
+
+      <div class="form-group">
         <label for="name">Port</label>
         <input type="text" class="form-control" name="Port" id="Port" placeholder=""
           value="{{ .Settings.Port }}">
@@ -76,13 +83,6 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Keysize</label>
-        <input type="text" class="form-control" name="Keysize" id="Keysize" placeholder=""
-          value="{{ .Settings.Keysize }}">
-        <span id="helpBlock" class="help-block"></span>
-      </div>
-
-      <div class="form-group">
         <label for="name">Auth</label>
         <input type="text" class="form-control" name="Auth" id="Auth" placeholder=""
           value="{{ .Settings.Auth }}">
@@ -97,11 +97,11 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Server-Bridge</label>
+        <label for="name">Server</label>
         <input type="text" class="form-control" name="Server" id="Server" placeholder=""
           value="{{ .Settings.Server }}">
-        <span id="helpBlock" class="help-block">Configures server-bridge mode and supplies an IP range
-            for OpenVPN to draw client addresses from.</span>
+        <span id="helpBlock" class="help-block">Specify server-bridge or server mode and supply an IP range
+            for OpenVPN to draw client addresses from</span>
       </div>
 
       <div class="form-group">
@@ -130,32 +130,47 @@
       </div>
 
       <div class="form-group">
-        <label for="name">MaxClients</label>
-        <input type="text" class="form-control" name="MaxClients" id="MaxClients" placeholder=""
-          value="{{ .Settings.MaxClients }}">
-        <span id="helpBlock" class="help-block">The maximum number of concurrently connected
-            clients we want to allow.</span>
+        <label for="name">Control Channel Encryption</label>
+        <input type="text" class="form-control" name="CCEncryption" id="CCEncryption" placeholder=""
+          value="{{ .Settings.CCEncryption }}">
+        <span id="helpBlock" class="help-block">Path for the key used
+            to encrypt the TLS Control Channel</span>
       </div>
 
       <div class="form-group">
-        <label for="name">ExtraServerOptions</label>
+        <label for="name">Extra Server Options</label>
         <textarea type="text" class="form-control" name="ExtraServerOptions" 
           id="ExtraServerOptions">{{ .Settings.ExtraServerOptions }}</textarea>
-        <span id="helpBlock" class="help-block">Extra server options to add to the config.</span>
+        <span id="helpBlock" class="help-block">Extra server options to add to the config. 
+          # indicates option will not be used. push block-outside DNS and push redirect-gateway
+          should not be used in a bridge setup.
+        </span>
       </div>
 
       <div class="form-group">
-        <label for="name">ExtraClientOptions</label>
+        <label for="name">Extra Client Options</label>
         <textarea type="text" class="form-control" name="ExtraClientOptions" 
           id="ExtraClientOptions">{{ .Settings.ExtraClientOptions }}</textarea>
-        <span id="helpBlock" class="help-block">Extra client options to add to the generated client configs.</span>
+        <span id="helpBlock" class="help-block">Extra client options to add to the generated client configs.
+            # indicates option will not be used. Either dev tun (tunnel) or dev tap (bridge) must be enabled!
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="name">PiVPN OpenVPN Server Name</label>
+        <input type="text" class="form-control" name="PiVPNServer" id="PiVPNServer" placeholder=""
+          value="{{ .Settings.PiVPNServer }}">
+        <span id="helpBlock" class="help-block">Unique name assigned by PiVPN for the 
+            server certificate and key
+        </span>
       </div>
 
       <div class="form-group">
         <label for="name">Management</label>
         <input type="text" class="form-control" name="Management" id="Management" placeholder=""
           value="{{ .Settings.Management }}">
-        <span id="helpBlock" class="help-block"></span>
+        <span id="helpBlock" class="help-block">IP address and port number for
+            the OpenVPN Management Interface</span>
       </div>
 
       {{ .xsrfdata }}

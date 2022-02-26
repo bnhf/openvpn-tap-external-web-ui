@@ -7,6 +7,7 @@ import (
 )
 
 var defaultConfig = Config{
+	Dev:                "tap",
 	ServerAddress:      "127.0.0.1",
 	Port:               1194,
 	Proto:              "udp",
@@ -19,6 +20,7 @@ var defaultConfig = Config{
 
 //Config model
 type Config struct {
+	Dev           string
 	ServerAddress string
 	Port          int
 	Proto         string
@@ -26,11 +28,13 @@ type Config struct {
 	Ca   string
 	Cert string
 	Key  string
+	Ta   string
 
 	Cipher             string
 	Keysize            int
 	Auth               string
 	ExtraClientOptions string
+	PiVPNServer        string
 }
 
 //New returns config object with default values

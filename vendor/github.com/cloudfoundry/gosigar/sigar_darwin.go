@@ -68,10 +68,6 @@ func (self *Mem) Get() error {
 	return nil
 }
 
-func (self *Mem) GetIgnoringCGroups() error {
-	return self.Get()
-}
-
 type xsw_usage struct {
 	Total, Avail, Used uint64
 }
