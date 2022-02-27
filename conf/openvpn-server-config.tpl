@@ -1,4 +1,3 @@
-management {{ .Management }}
 dev {{ .Dev }}
 proto {{ .Proto }}
 port {{ .Port }}
@@ -35,3 +34,4 @@ verb 3
 mute 10
 
 {{ .ExtraServerOptions }}
+management {{ .Management }}

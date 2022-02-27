@@ -103,7 +103,7 @@ func createDefaultOVConfig() {
 			DNSServerTwo:        "8.8.4.4",
 			Cipher:              "AES-256-GCM",
 			Auth:                "SHA256",
-			Dh:                  "dh2048.pem",
+			Dh:                  "none",
 			Keepalive:           "10 120",
 			IfconfigPoolPersist: "ipp.txt",
 			Management:          "0.0.0.0 2080",
