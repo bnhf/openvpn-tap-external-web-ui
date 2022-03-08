@@ -42,7 +42,7 @@ func (c *CertificatesController) DownloadSingleConfig() {
 	c.Ctx.Output.Header("Content-Type", "text/plain")
 	c.Ctx.Output.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
 
-	keysPath := models.GlobalCfg.OVConfigPath + "keys/"
+	keysPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki"
 	if cfgPath, err := saveClientSingleConfig(name, keysPath); err == nil {
 		c.Ctx.Output.Download(cfgPath, filename)
 	}
@@ -181,12 +181,13 @@ func saveClientConfig(name string) (string, error) {
 }
 
 func saveClientSingleConfig(name string, pathString string) (string, error) {
+	certPath := models.GlobalCfg.OVConfigPath + "easy-rsa/pki/"
 	cfg := config.New()
 	cfg.ServerAddress = models.GlobalCfg.ServerAddress
-	cfg.Cert = readCert(pathString + "../easy-rsa/pki/issued/" + name + ".crt")
-	cfg.Key = readCert(pathString + "../easy-rsa/pki/private/" + name + ".key")
-	cfg.Ca = readCert(pathString + "../easy-rsa/pki/" + "ca.crt")
-	cfg.Ta = readCert(pathString + "../easy-rsa/pki/" + "ta.key")
+	cfg.Cert = readCert(certPath + "issued/" + name + ".crt")
+	cfg.Key = readCert(certPath + "private/" + name + ".key")
+	cfg.Ca = readCert(certPath + "ca.crt")
+	cfg.Ta = readCert(certPath + "ta.key")
 	serverConfig := models.OVConfig{Profile: "default"}
 	serverConfig.Read("Profile")
 	cfg.ExtraClientOptions = serverConfig.ExtraClientOptions
