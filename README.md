@@ -1,7 +1,7 @@
 # OpenVPN-TAP-external-web-ui
 
 ## Summary
-OpenVPN TAP (bridge) external server (non-Docker) web administration interface. Intended for use with PiVPN (on amd64 versions of Debian or Ubuntu, or on ARMv7 with Raspberry Pi OS). PiVPN should be installed first!  Recently adapted to work with host-installed TUN servers too.
+OpenVPN TAP (bridge) external server (non-Docker) web administration interface. Intended for use with PiVPN (on amd64 versions of Debian or Ubuntu, or on ARM64/ARMv7 with Raspberry Pi OS). PiVPN should be installed first!  Recently adapted to work with host-installed TUN servers too.
 
 Here's a post on setting PiVPN in TAP server mode. It's written for the Raspberry Pi, but the steps are the same on Debian or Ubuntu. One exception is your physical ethernet adapter, which will likely not be eth0 in the openvpn-bridge script:
 
@@ -61,13 +61,17 @@ Requirements:
 * Docker, Portainer, PiVPN, Debian or Ubuntu
 * on firewall open ports: 8080/tcp
 
-Setup your Portainer Stacks page as shown on an amd64 machine running Debian or Ubuntu, inserting environment variables for creating certificates:
+Setup your Portainer Stacks page as shown on an amd64 machine running Debian or Ubuntu, inserting environment variables for creating certificates.  Also, you'll need the unique ID assigned by PiVPN to the server (the name used for the server certificate and key, which is the hostname followed by a series of numbers, letters and dashes):
 
-![screenshot-brix-pc2_9443-2022 02 03-15_35_24](https://user-images.githubusercontent.com/41088895/155859576-5a494d53-c943-40e6-ba6c-e18d18396164.png)
+![screenshot-nuc10-pc2_9443-2022 03 09-07_41_00](https://user-images.githubusercontent.com/41088895/157467979-b19c1085-68ac-4d89-8b38-ce7b3161f016.png)
 
-Setup your Portainer Stacks page as shown on an ARMv7 running the Raspberry Pi OS, inserting environment variables for creating certificates (grab the contents of the docker-compose.yml in the docs folder, and add a :armv7 as a tag after the container name:
+Setup your Portainer Stacks page as shown on an ARMv7 running the Raspberry Pi OS, inserting environment variables for creating certificates (grab the contents of the docker-compose.yml in the docs folder, and add a :armv7 as a tag after the container name):
 
-![screenshot-raspberrypi5_9000-2022 02 26-13_16_57](https://user-images.githubusercontent.com/41088895/155858516-edbcbc07-331a-4719-ab41-501d7c99934c.png)
+![screenshot-raspberrypi6_9000-2022 03 09-07_44_40](https://user-images.githubusercontent.com/41088895/157468105-f679a703-f02b-48c4-abcb-7e54b8255525.png)
+
+Setup your Portainer Stacks page as shown on an ARM64 running the Raspberry Pi OS, inserting environment variables for creating certificates. Also, you'll need the unique ID assigned by PiVPN to the server (grab the contents of the docker-compose.yml in the docs folder, and add a :arm64 as a tag after the container name):
+
+![screenshot-raspberrypi5_9000-2022 03 09-07_46_28](https://user-images.githubusercontent.com/41088895/157468989-bbb6b400-cc78-43d9-a19e-4e45d22e161a.png)
 
 This fork uses a single docker container with the OpenVPNAdmin web application. Through a docker volume it creates following directory structure for the database, but otherwise links to /etc/openvpn in the host. The intention is for PiVPN to be able to operate as usual, with PiVPN commanline options still available:
 
