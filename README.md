@@ -21,7 +21,7 @@ Certificate generation and management is also available, and should be compatibl
 
 ## Motivation
 
-* to create a version of this project that will work with OpenVPN TAP and TUN servers created using PiVPN (amd64 or ARMv7 only)
+* to create a version of this project that will work with OpenVPN TAP and TUN servers created using PiVPN (amd64, arm64 or ARMv7 )
 
 ## Features
 
@@ -104,7 +104,7 @@ Execute commands:
     
 For building on ARMv7:
 
-    In the dockerfile inside the build folder, comment out debian:bullseye as a source , and uncomment balenalib/raspberry-pi-debian:latest
+    In the dockerfile inside the build folder, comment out debian:bullseye as a source, and uncomment balenalib/raspberry-pi-debian:latest
     In build.sh, change the docker build to <your-docker-hub-repo-here>/openvpn-tap-external-web-ui:armv7
     It's highly recommended that you use Visual Studio Code with the "Remote - SSH" extension (in addition to the "Go" extension of course) from a more powerful machine
     
@@ -125,7 +125,7 @@ This project uses [MIT license](LICENSE)
 
 Numerous things have been updated to bring this project forward from its 2017 roots. It's now based on Debian 11 (in the container build), and is using the latest OpenVPN and EasyRSA, thanks to PiVPN. All of the project dependencies (vendoring) have been updated to current levels in 2022.
 
-Courtsey of @tyzbit, the ability to specify DNS servers, and additional client/server options have been added. Also @mendoza-conicet contributed code for being able to download a single .ovpn file. Many issues have been addressed related to adapting this package for use with a host-based server, and related to all of the latest versions of the dependencies,
+Courtsey of @tyzbit, the ability to specify DNS servers, and additional client/server options have been added. Also @mendoza-conicet contributed code for being able to download a single .ovpn file. Many issues have been addressed related to adapting this package for use with a host-based server, and related to all of the latest versions of the dependencies.
 
 And, of course, many thanks to @adamwalach for his excellent original work to create this project!
 
